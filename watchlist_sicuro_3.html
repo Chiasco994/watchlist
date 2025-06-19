@@ -52,45 +52,46 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
     .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
     .card {
-  border-radius: 15px;
-  padding: 8px;
   width: 100%;
-  max-width: 120px;
-  background: rgba(0, 0, 0, 0.7);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(3px);
-  position: relative;
+  max-width: 130px;
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
   overflow: hidden;
+  position: relative;
+  background-color: #000;
   color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  font-size: 0.7em;
+  justify-content: flex-end;
+  font-size: 0.65em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
     .card img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 6px;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.5);
 }
     .card-title {
   font-weight: bold;
-  font-size: 0.85em;
-  margin-bottom: 4px;
-  text-align: center;
+  font-size: 0.75em;
+  margin-bottom: 2px;
 }
     .card-link a {
-      text-decoration: none;
-      font-size: 1.2em;
-      color: #fff;
-    }
+  text-decoration: none;
+  font-size: 1.1em;
+  color: #fff;
+}
     .hidden { display: none; }
     #message {
       text-align: center;
