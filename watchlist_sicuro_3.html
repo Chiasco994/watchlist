@@ -124,22 +124,21 @@
 </head>
 <body>
   <h1>Watchlist</h1>
-  <div class="filters-container">
-    <div class="search-box">
-      <input type="text" id="search" placeholder="Cerca titolo...">
-      <button class="reset-button" onclick="resetFilters()">Reset</button>
-    </div>
-    <div class="filters">
-      <select id="canale"><option value="">Canale</option></select>
-      <select id="stato"><option value="">Stato</option></select>
-      <select id="rate"><option value="">Rate</option></select>
-      <select id="previsione"><option value="">Previsione</option></select>
-      <select id="genere"><option value="">Genere</option></select>
-      <select id="studio"><option value="">Studio / Autore</option></select>
-    </div>
+  <div class="filters-container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <h1 style="margin-bottom: 0;">Watchlist</h1>
+  <input type="text" id="search" placeholder="Cerca titolo..." style="width: 60%; max-width: 600px; padding: 10px; border-radius: 10px; border: none;">
+  <div class="filters" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+    <select id="canale"><option value="">Canale</option></select>
+    <select id="stato"><option value="">Stato</option></select>
+    <select id="rate"><option value="">Rate</option></select>
+    <select id="previsione"><option value="">Previsione</option></select>
+    <select id="genere"><option value="">Genere</option></select>
+    <select id="studio"><option value="">Studio / Autore</option></select>
+  </div>
+  <button class="reset-button" onclick="resetFilters()">Reset</button>
   </div>
   <div id="results" class="cards"></div>
-  <div id="message"></div>
+  
   <div style="text-align:center">
     <button class="add-button" onclick="showForm()">+ Aggiungi nuovo anime/manga</button>
   </div>
