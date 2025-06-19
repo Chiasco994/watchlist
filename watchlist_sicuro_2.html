@@ -13,29 +13,19 @@
       background-size: cover;
       color: #fff;
     }
-
     h1 {
       text-align: center;
       color: #fff;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
     }
-
-    .filters-container {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .search-box {
-      margin-bottom: 10px;
-    }
-
+    .filters-container { text-align: center; margin-bottom: 20px; }
+    .search-box { margin-bottom: 10px; }
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
     }
-
     .filters select,
     .filters input[type="text"] {
       padding: 8px 10px;
@@ -45,7 +35,6 @@
       color: #000;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
-
     .reset-button,
     .add-button {
       margin-left: 10px;
@@ -57,20 +46,17 @@
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
     .reset-button:hover,
     .add-button:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-
     .cards {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
       justify-content: center;
     }
-
     .card {
       border-radius: 20px;
       padding: 15px;
@@ -85,31 +71,24 @@
       flex-direction: column;
       align-items: center;
     }
-
     .card img {
       width: 100%;
       height: auto;
       border-radius: 15px;
       margin-bottom: 10px;
     }
-
     .card-title {
       font-weight: bold;
       font-size: 1.1em;
       margin-bottom: 5px;
       text-align: center;
     }
-
     .card-link a {
       text-decoration: none;
       font-size: 1.2em;
       color: #fff;
     }
-
-    .hidden {
-      display: none;
-    }
-
+    .hidden { display: none; }
     #message {
       text-align: center;
       margin-top: 20px;
@@ -135,14 +114,11 @@
       <select id="studio"><option value="">Studio / Autore</option></select>
     </div>
   </div>
-
   <div id="results" class="cards"></div>
   <div id="message"></div>
-
   <div style="text-align:center">
     <button class="add-button" onclick="showForm()">+ Aggiungi nuovo anime/manga</button>
   </div>
-
   <div id="form-container" class="hidden" style="text-align:center; margin-top:20px;">
     <input id="newAnime" placeholder="Titolo">
     <input id="newLink" placeholder="Link">
@@ -155,7 +131,6 @@
     <input id="newImg" placeholder="Link immagine">
     <button onclick="submitAnime()">Salva</button>
   </div>
-
   <script>
     const endpoint = "https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec";
     let data = [];
@@ -167,8 +142,8 @@
         data = json.map(entry => ({
           titolo: entry["Anime"],
           link: entry["Link"],
-          genere: String(entry["Genere"]).split(',').map(g => g.trim()),
-          studio: String(entry["Studio / Autore"]).split(',').map(s => s.trim()),
+          genere: typeof entry["Genere"] === "string" ? entry["Genere"].split(',').map(g => g.trim()) : [],
+          studio: typeof entry["Studio / Autore"] === "string" ? entry["Studio / Autore"].split(',').map(s => s.trim()) : [],
           canale: entry["Canale"],
           stato: entry["Stato"],
           rate: entry["Rate"],
@@ -205,7 +180,6 @@
       const search = document.getElementById('search').value.toLowerCase();
       const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
       const hasFilters = search || Object.values(activeFilters).some(val => val);
-
       const filtered = hasFilters ? data.filter(entry => {
         if (search && !entry.titolo.toLowerCase().includes(search)) return false;
         for (const [f, val] of Object.entries(activeFilters)) {
@@ -221,7 +195,6 @@
 
       const container = document.getElementById('results');
       const message = document.getElementById('message');
-
       container.innerHTML = '';
       if (filtered.length > 0) {
         message.innerText = '';
@@ -264,7 +237,6 @@
         "Previsione": document.getElementById('newPrevisione').value,
         "Immagine": document.getElementById('newImg').value
       };
-
       fetch(endpoint, {
         method: 'POST',
         body: JSON.stringify(newEntry)
