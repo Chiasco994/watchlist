@@ -82,14 +82,14 @@
       z-index: 0;
     }
     .card-title {
-      font-weight: bold;
-      font-size: 0.85em;
-      margin-bottom: 2px;
-      z-index: 1;
-      background-color: rgba(0, 0, 0, 0.6);
-      width: 100%;
-      text-align: center;
-    }
+  font-weight: bold;
+  font-size: 0.85em;
+  margin-bottom: 2px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  text-align: center;
+}
     .card-link a {
       text-decoration: none;
       font-size: 1.1em;
@@ -97,12 +97,12 @@
       z-index: 1;
     }
     .card div {
-      z-index: 1;
-      background-color: rgba(0, 0, 0, 0.6);
-      width: 100%;
-      padding: 4px;
-      box-sizing: border-box;
-    }
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  padding: 4px;
+  box-sizing: border-box;
+}
     .hidden { display: none; }
     #message {
       text-align: center;
@@ -232,9 +232,7 @@
         card.innerHTML = `
           <img src="${entry.bg}" alt="${entry.titolo}">
           <div class="card-title">${entry.titolo}</div>
-          <div class="card-link"><a href="${entry.link}" target="_blank">🔗</a></div>
-          <div><strong>Genere:</strong> ${entry.genere.join(", ")}</div>
-          <div><strong>Studio:</strong> ${entry.studio.join(", ")}</div>
+          <div class="card-link" style="text-align:center"><a href="${entry.link}" target="_blank">🔗</a></div>
         `;
         container.appendChild(card);
       });
