@@ -123,7 +123,6 @@
   </style>
 </head>
 <body>
-  <h1>Watchlist</h1>
   <div class="filters-container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
   <h1 style="margin-bottom: 0;">Watchlist</h1>
   <input type="text" id="search" placeholder="Cerca titolo..." style="width: 60%; max-width: 600px; padding: 10px; border-radius: 10px; border: none;">
@@ -221,10 +220,10 @@
     }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
 
     const container = document.getElementById('results');
-    const message = document.getElementById('message');
+    
     container.innerHTML = '';
     if (filtered.length > 0) {
-      message.innerText = '';
+      
       filtered.forEach(entry => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -236,7 +235,7 @@
         container.appendChild(card);
       });
     } else {
-      message.innerText = "Nessun anime da visualizzare. Usa i filtri o la barra di ricerca.";
+      
     }
   }
 
