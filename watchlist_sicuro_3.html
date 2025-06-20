@@ -159,6 +159,20 @@
     transform: scale(1);
   }
 }
+#success-check-image {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: none;
+  margin: 0 auto;
+  animation: drawCheck 0.8s ease-out forwards;
+}
+
+@keyframes drawCheck {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
 </style>
 </head>
 <body>
@@ -190,7 +204,7 @@
     <input id="newRate" placeholder="Rate (1-3)" type="number" min="1" max="3">
     <input id="newPrevisione" placeholder="Previsione">
     <input id="newImg" placeholder="Link immagine">
-    <button onclick="submitAnime()">Salva</button>
+    <button id="save-button" onclick="submitAnime()">Salva</button>
   </div>
 <script>
   const endpoint = "https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec";
@@ -305,15 +319,13 @@
       body: JSON.stringify(newEntry)
     }).then(res => {
       if (res.ok) {
-        document.getElementById('success-check').style.display = 'block';
+        const button = document.getElementById('save-button');
+        button.style.display = 'none';
+        const check = document.getElementById('success-check');
+        check.style.display = 'block';
         setTimeout(() => {
-          document.getElementById('success-check').style.transform = 'scale(1)';
-        }, 10);
-        setTimeout(() => {
-          document.getElementById('success-check').style.transform = 'scale(0)';
-          setTimeout(() => {
-            document.getElementById('success-check').style.display = 'none';
-            location.reload();
+          location.reload();
+        }, 1800);
           }, 300);
         }, 1500);
         alert("Aggiunto con successo!");
@@ -327,6 +339,8 @@
   document.getElementById('search').addEventListener('input', filterAndDisplay);
   filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
 </script>
-<div id="success-check" style="position: fixed; top: 30px; right: 30px; background: #4CAF50; color: white; font-size: 2em; padding: 10px 20px; border-radius: 50%; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; transform: scale(0); transition: transform 0.3s ease-out, opacity 0.3s;">✔</div>
+<div id="success-check" style="display: none; text-align: center; margin-top: 20px;">
+  <img id="success-check-image" src="https://chiasco994.github.io/watchlist/checkmark.png" alt="check" />
+</div>
 </body>
 </html>
