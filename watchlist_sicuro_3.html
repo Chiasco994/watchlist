@@ -232,7 +232,7 @@
     });
     filters.forEach(f => {
       const sel = document.getElementById(f);
-      sel.innerHTML = `<option value="">${sel.options[0].textContent}</option>`;
+      sel.innerHTML = `<option value="" disabled selected hidden>${sel.options[0].textContent}</option>`;
       [...unique[f]].sort((a, b) => (f === 'rate' ? a - b : a.localeCompare(b))).forEach(opt => {
         const option = document.createElement('option');
         option.value = opt; option.textContent = opt;
