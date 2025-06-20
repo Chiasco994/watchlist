@@ -305,6 +305,17 @@
       body: JSON.stringify(newEntry)
     }).then(res => {
       if (res.ok) {
+        document.getElementById('success-check').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('success-check').style.transform = 'scale(1)';
+        }, 10);
+        setTimeout(() => {
+          document.getElementById('success-check').style.transform = 'scale(0)';
+          setTimeout(() => {
+            document.getElementById('success-check').style.display = 'none';
+            location.reload();
+          }, 300);
+        }, 1500);
         alert("Aggiunto con successo!");
         location.reload();
       } else {
@@ -316,5 +327,6 @@
   document.getElementById('search').addEventListener('input', filterAndDisplay);
   filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
 </script>
+<div id="success-check" style="position: fixed; top: 30px; right: 30px; background: #4CAF50; color: white; font-size: 2em; padding: 10px 20px; border-radius: 50%; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; transform: scale(0); transition: transform 0.3s ease-out, opacity 0.3s;">✔</div>
 </body>
 </html>
