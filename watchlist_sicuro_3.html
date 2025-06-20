@@ -208,6 +208,30 @@
   50% { opacity: 1; transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5em;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
+  font-family: 'My Hero Academia', sans-serif;
+  transition: transform 0.2s, background 0.3s;
+}
+#back-to-top:hover {
+  transform: scale(1.1);
+  background-color: #e65c5c;
+}
 </style>
 </head>
 <body>
@@ -376,7 +400,20 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 
   document.getElementById('search').addEventListener('input', filterAndDisplay);
   filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
+window.addEventListener('scroll', () => {
+  const scrollBtn = document.getElementById('back-to-top');
+  if (window.scrollY > 300) {
+    scrollBtn.style.display = 'flex';
+  } else {
+    scrollBtn.style.display = 'none';
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 
+<button id="back-to-top" onclick="scrollToTop()">↑</button>
 </body>
 </html>
