@@ -319,21 +319,16 @@
       body: JSON.stringify(newEntry)
     }).then(res => {
       if (res.ok) {
-        const button = document.getElementById('save-button');
-        button.style.display = 'none';
-        const check = document.getElementById('success-check');
-        check.style.display = 'block';
-        setTimeout(() => {
-          location.reload();
-        }, 1800);
-          }, 300);
-        }, 1500);
-        alert("Aggiunto con successo!");
+      const button = document.getElementById('save-button');
+      button.style.display = 'none';
+      const check = document.getElementById('success-check');
+      check.style.display = 'block';
+      setTimeout(() => {
         location.reload();
-      } else {
-        alert("Errore durante il salvataggio.");
-      }
-    });
+      }, 1800);
+    } else {
+      alert("Errore durante il salvataggio.");
+    }
   }
 
   document.getElementById('search').addEventListener('input', filterAndDisplay);
