@@ -232,6 +232,33 @@
   transform: scale(1.1);
   background-color: #e65c5c;
 }
+@media (max-width: 600px) {
+  .filters-container {
+    gap: 20px;
+    padding: 10px;
+  }
+  .filters {
+    flex-wrap: wrap !important;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: hidden;
+  }
+  .filters select {
+    width: 100%;
+    max-width: 95%;
+  }
+  .reset-button, .add-button {
+    width: 95%;
+    font-size: 1em;
+    padding: 10px;
+  }
+  .form-input {
+    max-width: 95%;
+  }
+  #form-container > div {
+    width: 95% !important;
+  }
+}
 </style>
 </head>
 <body>
