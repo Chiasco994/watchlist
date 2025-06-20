@@ -191,6 +191,23 @@
   font-family: 'My Hero Academia', sans-serif !important;
   text-align: center;
 }
+#success-check {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#success-check img {
+  width: 100px;
+  animation: drawCheck 1s ease-out;
+}
+
+@keyframes drawCheck {
+  0% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
 </style>
 </head>
 <body>
@@ -224,6 +241,9 @@
     <input id="newImg" placeholder="Link immagine" class="form-input">
     <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
   </div>
+</div>
+<div id="success-check">
+  <img src="https://chiasco994.github.io/watchlist/checkmark.png" alt="Salvato">
 </div>
 <script>
   const endpoint = "https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec";
@@ -340,7 +360,9 @@
     body: JSON.stringify(newEntry)
   }).then(res => {
     if (!res.ok) throw new Error();
-    location.reload();
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('success-check').style.display = 'flex';
+    setTimeout(() => location.reload(), 1800);
   }).catch(() => alert("Errore durante il salvataggio."));
 }
 
