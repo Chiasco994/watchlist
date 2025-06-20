@@ -315,7 +315,6 @@
     location.reload();
   }).catch(() => alert("Errore durante il salvataggio."));
 }
-  }
 
   document.getElementById('search').addEventListener('input', filterAndDisplay);
   filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
