@@ -285,7 +285,15 @@
     });
     filters.forEach(f => {
       const sel = document.getElementById(f);
-      sel.innerHTML = `<option value="" disabled selected hidden>${f.charAt(0).toUpperCase() + f.slice(1)}</option>`;
+      const filterLabels = {
+  canale: "Canale",
+  stato: "Stato",
+  rate: "Rate",
+  previsione: "Previsione",
+  genere: "Genere",
+  studio: "Studio / Autore"
+};
+sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</option>`;
       [...unique[f]].sort((a, b) => (f === 'rate' ? a - b : a.localeCompare(b))).forEach(opt => {
         const option = document.createElement('option');
         option.value = opt; option.textContent = opt;
