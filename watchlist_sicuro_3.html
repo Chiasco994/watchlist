@@ -133,6 +133,16 @@
       text-shadow: 1px 1px 5px black;
     }
     @media (max-width: 600px) {
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .filters select {
+    width: 100%;
+    font-size: 0.9em;
+    padding: 10px;
+  }
   h1 {
     font-size: 2em;
     margin-bottom: 10px;
