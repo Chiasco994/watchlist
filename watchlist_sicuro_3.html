@@ -198,7 +198,7 @@
   <div style="text-align:center">
     <button class="add-button" onclick="showForm()">+ Aggiungi nuovo anime/manga</button>
   </div>
-  <div id="form-container" class="hidden" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px;">
+  <div id="form-container" class="hidden" style="display: none; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 30px;"
   <input id="newAnime" placeholder="Titolo" class="form-input">
   <input id="newLink" placeholder="Link" class="form-input">
   <input id="newGenere" placeholder="Generi separati da virgola" class="form-input">
@@ -303,8 +303,10 @@
   }
 
   function showForm() {
-    document.getElementById('form-container').classList.remove('hidden');
-  }
+  const form = document.getElementById('form-container');
+  form.classList.toggle('hidden');
+  form.style.display = form.classList.contains('hidden') ? 'none' : 'flex';
+}
 
   function submitAnime() {
   const newEntry = {
