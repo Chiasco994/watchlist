@@ -159,17 +159,9 @@
     transform: scale(1);
   }
 }
-#success-check-image {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  display: none;
-  margin: 0 auto;
-  animation: drawCheck 0.8s ease-out forwards;
-}
 
-@keyframes drawCheck {
-  0% { transform: scale(0); opacity: 0; }
+
+
   50% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
 }
@@ -320,12 +312,7 @@
     body: JSON.stringify(newEntry)
   }).then(res => {
     if (!res.ok) throw new Error();
-    document.getElementById('save-button').style.display = 'none';
-    const check = document.getElementById('success-check');
-    check.style.display = 'block';
-    setTimeout(() => {
-      location.reload();
-    }, 1800);
+    location.reload();
   }).catch(() => alert("Errore durante il salvataggio."));
 }
   }
@@ -333,8 +320,6 @@
   document.getElementById('search').addEventListener('input', filterAndDisplay);
   filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
 </script>
-<div id="success-check" style="display: none; text-align: center; margin-top: 20px;">
-  <img id="success-check-image" src="https://chiasco994.github.io/watchlist/checkmark.png" alt="check" />
-</div>
+
 </body>
 </html>
