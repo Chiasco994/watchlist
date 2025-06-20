@@ -246,7 +246,7 @@
     });
     filters.forEach(f => {
       const sel = document.getElementById(f);
-      sel.innerHTML = `<option value="" disabled selected hidden>${sel.options[0].textContent}</option>`;
+      sel.innerHTML = `<option value="" disabled selected hidden>${f.charAt(0).toUpperCase() + f.slice(1)}</option>`;
       [...unique[f]].sort((a, b) => (f === 'rate' ? a - b : a.localeCompare(b))).forEach(opt => {
         const option = document.createElement('option');
         option.value = opt; option.textContent = opt;
@@ -318,13 +318,14 @@
       method: 'POST',
       body: JSON.stringify(newEntry)
     }).then(res => {
-      if (res.ok) {
-      const button = document.getElementById('save-button');
-      button.style.display = 'none';
+      if (!res.ok) throw new Error();
+      document.getElementById('save-button').style.display = 'none';
       const check = document.getElementById('success-check');
       check.style.display = 'block';
       setTimeout(() => {
         location.reload();
+      }, 1800);
+    }).catch(() => alert("Errore durante il salvataggio."));
       }, 1800);
     } else {
       alert("Errore durante il salvataggio.");
