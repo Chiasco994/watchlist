@@ -303,33 +303,31 @@
   }
 
   function submitAnime() {
-    const newEntry = {
-      "Anime": document.getElementById('newAnime').value,
-      "Link": document.getElementById('newLink').value,
-      "Genere": document.getElementById('newGenere').value.split(',').map(s => s.trim()),
-      "Studio / Autore": document.getElementById('newStudio').value,
-      "Canale": document.getElementById('newCanale').value,
-      "Stato": document.getElementById('newStato').value,
-      "Rate": parseInt(document.getElementById('newRate').value),
-      "Previsione": document.getElementById('newPrevisione').value,
-      "Immagine": document.getElementById('newImg').value
-    };
-    fetch(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(newEntry)
-    }).then(res => {
-      if (!res.ok) throw new Error();
-      document.getElementById('save-button').style.display = 'none';
-      const check = document.getElementById('success-check');
-      check.style.display = 'block';
-      setTimeout(() => {
-        location.reload();
-      }, 1800);
-    }).catch(() => alert("Errore durante il salvataggio."));
-      }, 1800);
-    } else {
-      alert("Errore durante il salvataggio.");
-    }
+  const newEntry = {
+    "Anime": document.getElementById('newAnime').value,
+    "Link": document.getElementById('newLink').value,
+    "Genere": document.getElementById('newGenere').value.split(',').map(s => s.trim()),
+    "Studio / Autore": document.getElementById('newStudio').value,
+    "Canale": document.getElementById('newCanale').value,
+    "Stato": document.getElementById('newStato').value,
+    "Rate": parseInt(document.getElementById('newRate').value),
+    "Previsione": document.getElementById('newPrevisione').value,
+    "Immagine": document.getElementById('newImg').value
+  };
+
+  fetch(endpoint, {
+    method: 'POST',
+    body: JSON.stringify(newEntry)
+  }).then(res => {
+    if (!res.ok) throw new Error();
+    document.getElementById('save-button').style.display = 'none';
+    const check = document.getElementById('success-check');
+    check.style.display = 'block';
+    setTimeout(() => {
+      location.reload();
+    }, 1800);
+  }).catch(() => alert("Errore durante il salvataggio."));
+}
   }
 
   document.getElementById('search').addEventListener('input', filterAndDisplay);
