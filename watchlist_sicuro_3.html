@@ -316,10 +316,26 @@
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
   <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
     <input id="newAnime" placeholder="Titolo" class="form-input">
-    <input id="newCanale" placeholder="Canale" class="form-input">
+    <input id="newCanale" placeholder="Canale" class="form-input" list="canale-options">
+<datalist id="canale-options">
+  <option value="Anime">
+  <option value="Manga">
+</datalist>
     <input id="newLink" placeholder="Link" class="form-input">
-    <input id="newStato" placeholder="Stato" class="form-input">
-    <input id="newPrevisione" placeholder="Previsione" class="form-input">
+    <input id="newStato" placeholder="Stato" class="form-input" list="stato-options">
+<datalist id="stato-options">
+  <option value="Da vedere">
+  <option value="Da leggere">
+  <option value="Visto">
+  <option value="Letto">
+  <option value="In corso">
+</datalist>
+    <input id="newPrevisione" placeholder="Previsione" class="form-input" list="previsione-options">
+<datalist id="previsione-options">
+  <option value="Annunciata">
+  <option value="Conclusa">
+  <option value="In programma">
+</datalist>
     <input id="newGenere" placeholder="Genere" class="form-input">
     <input id="newStudio" placeholder="Studio / Autore" class="form-input">
     <input id="newImg" placeholder="Link immagine" class="form-input">
