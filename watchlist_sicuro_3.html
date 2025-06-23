@@ -1,39 +1,125 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <!-- (resto invariato) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watchlist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fira Sans', sans-serif;
+      background: url('https://images6.alphacoders.com/656/656029.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    h1 {
+      font-size: 3rem;
+      color: orange;
+      text-shadow: 2px 2px 4px #000;
+      text-align: center;
+      font-family: 'Futura Display BQ', sans-serif;
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: 'Fira Sans', sans-serif;
+    }
+    .add-button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      background-color: orange;
+      border: none;
+      cursor: pointer;
+      font-family: 'Fira Sans', sans-serif;
+    }
+  </style>
 </head>
 <body>
-  <!-- (resto invariato) -->
+  <h1>Watchlist</h1>
+
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
-  <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
-    <input id="newAnime" placeholder="Titolo" class="form-input">
-    <input id="newCanale" list="canali-list" placeholder="Canale" class="form-input">
-    <input id="newLink" placeholder="Link" class="form-input">
-    <input id="newStato" list="stato-list" placeholder="Stato" class="form-input">
-    <input id="newPrevisione" list="previsione-list" placeholder="Previsione" class="form-input">
-    <input id="newGenere" placeholder="Genere" class="form-input">
-    <input id="newStudio" placeholder="Studio / Autore" class="form-input">
-    <input id="newImg" placeholder="Link immagine" class="form-input">
-    <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
+    <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'Fira Sans', sans-serif;">
+      <input id="newAnime" placeholder="Titolo" class="form-input">
+      <input id="newCanale" list="canali-list" placeholder="Canale" class="form-input">
+      <input id="newLink" placeholder="Link" class="form-input">
+      <input id="newStato" list="stato-list" placeholder="Stato" class="form-input">
+      <input id="newPrevisione" list="previsione-list" placeholder="Previsione" class="form-input">
+      <input id="newGenere" placeholder="Genere" class="form-input">
+      <input id="newStudio" placeholder="Studio / Autore" class="form-input">
+      <input id="newImg" placeholder="Link immagine" class="form-input">
+      <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
+    </div>
   </div>
-</div>
-<datalist id="canali-list">
-  <option value="Anime">
-  <option value="Manga">
-</datalist>
-<datalist id="stato-list">
-  <option value="Da vedere">
-  <option value="Da leggere">
-  <option value="Visto">
-  <option value="Letto">
-  <option value="In corso">
-</datalist>
-<datalist id="previsione-list">
-  <option value="Annunciata">
-  <option value="Conclusa">
-  <option value="In programma">
-</datalist>
-<!-- (resto invariato) -->
+
+  <datalist id="canali-list">
+    <option value="Anime">
+    <option value="Manga">
+  </datalist>
+  <datalist id="stato-list">
+    <option value="Da vedere">
+    <option value="Da leggere">
+    <option value="Visto">
+    <option value="Letto">
+    <option value="In corso">
+  </datalist>
+  <datalist id="previsione-list">
+    <option value="Annunciata">
+    <option value="Conclusa">
+    <option value="In programma">
+  </datalist>
+
+  <script>
+    // Event listener per input dei filtri
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('search')?.addEventListener('input', filterAndDisplay);
+      const filters = ["canale", "stato", "rate", "previsione", "genere", "studio"];
+      filters.forEach(f => {
+        const el = document.getElementById(f);
+        if (el) el.addEventListener('change', filterAndDisplay);
+      });
+    });
+
+    function submitAnime() {
+      const anime = document.getElementById("newAnime").value.trim();
+      const canale = document.getElementById("newCanale").value.trim();
+      const link = document.getElementById("newLink").value.trim();
+      const stato = document.getElementById("newStato").value.trim();
+      const previsione = document.getElementById("newPrevisione").value.trim();
+      const genere = document.getElementById("newGenere").value.trim();
+      const studio = document.getElementById("newStudio").value.trim();
+      const img = document.getElementById("newImg").value.trim();
+
+      if (!anime || !canale || !link || !stato || !previsione || !genere || !studio || !img) {
+        alert("Compila tutti i campi prima di salvare.");
+        return;
+      }
+
+      fetch("https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          Titolo: anime,
+          Canale: canale,
+          Link: link,
+          Stato: stato,
+          Previsione: previsione,
+          Genere: genere,
+          Studio: studio,
+          Immagine: img
+        })
+      }).then(res => {
+        if (!res.ok) throw new Error();
+        document.getElementById("form-container").style.display = "none";
+        alert("Anime/Manga aggiunto correttamente!");
+        location.reload();
+      }).catch(() => alert("Errore durante il salvataggio."));
+    }
+  </script>
 </body>
 </html>
