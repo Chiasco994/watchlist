@@ -501,6 +501,8 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+document.getElementById('search').addEventListener('input', filterAndDisplay);
+filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
 </script>
 
 <button id="back-to-top" onclick="scrollToTop()">↑</button>
