@@ -337,8 +337,8 @@
   <option value="Conclusa">Conclusa</option>
 </select>
 
-    <input id="newGenere" placeholder="Genere" class="form-input">
-    <input id="newStudio" placeholder="Studio / Autore" class="form-input">
+    <select id="newGenere" class="form-input" multiple></select>
+    <select id="newStudio" class="form-input" multiple></select>
     <input id="newImg" placeholder="Link immagine" class="form-input">
     <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
   </div>
@@ -401,7 +401,28 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
         sel.appendChild(option);
       });
     });
-  }
+      // Popola <select multiple> per Genere e Studio / Autore nella card "Aggiungi nuovo"
+    const genereSelect = document.getElementById("newGenere");
+    const studioSelect = document.getElementById("newStudio");
+
+    // Svuota le select prima di riempirle
+    genereSelect.innerHTML = "";
+    studioSelect.innerHTML = "";
+
+    [...unique.genere].sort().forEach(val => {
+      const opt = document.createElement("option");
+      opt.value = val;
+      opt.textContent = val;
+      genereSelect.appendChild(opt);
+    });
+
+    [...unique.studio].sort().forEach(val => {
+      const opt = document.createElement("option");
+      opt.value = val;
+      opt.textContent = val;
+      studioSelect.appendChild(opt);
+    });
+}
 
   function filterAndDisplay() {
     const search = document.getElementById('search').value.toLowerCase();
@@ -472,8 +493,8 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   const newEntry = {
     "Anime": document.getElementById('newAnime').value,
     "Link": document.getElementById('newLink').value,
-    "Genere": document.getElementById('newGenere').value.split(',').map(s => s.trim()),
-    "Studio / Autore": document.getElementById('newStudio').value,
+    "Genere": [...document.getElementById('newGenere').selectedOptions].map(o => o.value).join(', '),
+    "Studio / Autore": [...document.getElementById('newStudio').selectedOptions].map(o => o.value).join(', '),
     "Canale": document.getElementById('newCanale').value,
     "Stato": document.getElementById('newStato').value,
     "Previsione": document.getElementById('newPrevisione').value,
