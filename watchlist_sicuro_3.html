@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Watchlist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Futura Display BQ';
+      src: url('https://francescocampaner.github.io/watchlist/Futura%20Display%20BQ%20Regular.otf') format('opentype');
+    }
     body {
       margin: 0;
-      font-family: 'Fira Sans', sans-serif;
-      background: url('https://images6.alphacoders.com/656/656029.png') no-repeat center center fixed;
+      font-family: 'Futura Display BQ', sans-serif;
+      background: url('https://francescocampaner.github.io/watchlist/Image_optimized.png') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
     }
@@ -28,7 +29,7 @@
       font-size: 1rem;
       border-radius: 10px;
       border: 1px solid #ccc;
-      font-family: 'Fira Sans', sans-serif;
+      font-family: 'Futura Display BQ', sans-serif;
     }
     .add-button {
       padding: 10px 20px;
@@ -37,15 +38,24 @@
       background-color: orange;
       border: none;
       cursor: pointer;
-      font-family: 'Fira Sans', sans-serif;
+      font-family: 'Futura Display BQ', sans-serif;
+    }
+    #checkmark {
+      width: 100px;
+      margin: 20px auto;
+      display: none;
+      animation: draw 1s ease-in-out forwards;
+    }
+    @keyframes draw {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
   <h1>Watchlist</h1>
-
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
-    <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'Fira Sans', sans-serif;">
+    <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'Futura Display BQ', sans-serif;">
       <input id="newAnime" placeholder="Titolo" class="form-input">
       <input id="newCanale" list="canali-list" placeholder="Canale" class="form-input">
       <input id="newLink" placeholder="Link" class="form-input">
@@ -55,6 +65,7 @@
       <input id="newStudio" placeholder="Studio / Autore" class="form-input">
       <input id="newImg" placeholder="Link immagine" class="form-input">
       <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
+      <img id="checkmark" src="https://francescocampaner.github.io/watchlist/checkmark.png" alt="Salvato con successo">
     </div>
   </div>
 
@@ -76,7 +87,6 @@
   </datalist>
 
   <script>
-    // Event listener per input dei filtri
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('search')?.addEventListener('input', filterAndDisplay);
       const filters = ["canale", "stato", "rate", "previsione", "genere", "studio"];
@@ -116,8 +126,8 @@
       }).then(res => {
         if (!res.ok) throw new Error();
         document.getElementById("form-container").style.display = "none";
-        alert("Anime/Manga aggiunto correttamente!");
-        location.reload();
+        document.getElementById("checkmark").style.display = "block";
+        setTimeout(() => location.reload(), 1500);
       }).catch(() => alert("Errore durante il salvataggio."));
     }
   </script>
