@@ -474,6 +474,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
     return;
   }
+
   const newEntry = {
     "Anime": document.getElementById('newAnime').value,
     "Link": document.getElementById('newLink').value,
@@ -485,17 +486,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     "Immagine": document.getElementById('newImg').value
   };
 
-  if (!newEntry["Anime"] || 
-      !allowedCanali.includes(newEntry["Canale"]) || 
-      !allowedStati.includes(newEntry["Stato"]) || 
-      !allowedPrevisioni.includes(newEntry["Previsione"]) || 
-      !newEntry["Link"] || 
-      !newEntry["Genere"].length || 
-      !newEntry["Studio / Autore"] || 
-      !newEntry["Immagine"]) {
-    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
-    return;
-  }
+  
 
   
   }
