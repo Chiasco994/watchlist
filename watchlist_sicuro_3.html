@@ -288,6 +288,10 @@
     width: 95% !important;
   }
 }
+.form-input.invalid {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.1);
+}
 </style>
 </head>
 <body>
@@ -432,6 +436,22 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function submitAnime() {
+  const fields = [
+    'newAnime', 'newLink', 'newGenere', 'newStudio', 'newCanale', 'newStato', 'newPrevisione', 'newImg'
+  ];
+
+  fields.forEach(id => document.getElementById(id).classList.remove('invalid'));
+
+  const values = fields.map(id => document.getElementById(id).value.trim());
+  const isValid = values.every(v => v.length > 0);
+
+  if (!isValid) {
+    fields.forEach((id, i) => {
+      if (!values[i]) document.getElementById(id).classList.add('invalid');
+    });
+    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
+    return;
+  }
   const newEntry = {
     "Anime": document.getElementById('newAnime').value,
     "Link": document.getElementById('newLink').value,
@@ -442,6 +462,11 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     "Previsione": document.getElementById('newPrevisione').value,
     "Immagine": document.getElementById('newImg').value
   };
+
+  if (!newEntry["Anime"] || !newEntry["Link"] || !newEntry["Immagine"] || !newEntry["Canale"] || !newEntry["Stato"] || !newEntry["Previsione"] || !newEntry["Genere"].length || !newEntry["Studio / Autore"]) {
+    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
+    return;
+  }
 
   fetch(endpoint, {
     method: 'POST',
