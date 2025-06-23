@@ -316,26 +316,10 @@
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
   <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
     <input id="newAnime" placeholder="Titolo" class="form-input">
-    <input id="newCanale" placeholder="Canale" class="form-input" list="canale-options">
-<datalist id="canale-options">
-  <option value="Anime">
-  <option value="Manga">
-</datalist>
+    <input id="newCanale" placeholder="Canale" class="form-input">
     <input id="newLink" placeholder="Link" class="form-input">
-    <input id="newStato" placeholder="Stato" class="form-input" list="stato-options">
-<datalist id="stato-options">
-  <option value="Da vedere">
-  <option value="Da leggere">
-  <option value="Visto">
-  <option value="Letto">
-  <option value="In corso">
-</datalist>
-    <input id="newPrevisione" placeholder="Previsione" class="form-input" list="previsione-options">
-<datalist id="previsione-options">
-  <option value="Annunciata">
-  <option value="Conclusa">
-  <option value="In programma">
-</datalist>
+    <input id="newStato" placeholder="Stato" class="form-input">
+    <input id="newPrevisione" placeholder="Previsione" class="form-input">
     <input id="newGenere" placeholder="Genere" class="form-input">
     <input id="newStudio" placeholder="Studio / Autore" class="form-input">
     <input id="newImg" placeholder="Link immagine" class="form-input">
@@ -452,9 +436,6 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function submitAnime() {
-  const allowedCanali = ['Anime', 'Manga'];
-  const allowedStati = ['Da vedere', 'Da leggere', 'Visto', 'Letto', 'In corso'];
-  const allowedPrevisioni = ['Annunciata', 'Conclusa', 'In programma'];
   const fields = [
     'newAnime', 'newLink', 'newGenere', 'newStudio', 'newCanale', 'newStato', 'newPrevisione', 'newImg'
   ];
@@ -464,17 +445,13 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   const values = fields.map(id => document.getElementById(id).value.trim());
   const isValid = values.every(v => v.length > 0);
 
-  if (!isValid ||
-      !allowedCanali.includes(document.getElementById('newCanale').value) ||
-      !allowedStati.includes(document.getElementById('newStato').value) ||
-      !allowedPrevisioni.includes(document.getElementById('newPrevisione').value)) {
+  if (!isValid) {
     fields.forEach((id, i) => {
       if (!values[i]) document.getElementById(id).classList.add('invalid');
     });
     alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
     return;
   }
-
   const newEntry = {
     "Anime": document.getElementById('newAnime').value,
     "Link": document.getElementById('newLink').value,
@@ -485,6 +462,11 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     "Previsione": document.getElementById('newPrevisione').value,
     "Immagine": document.getElementById('newImg').value
   };
+
+  if (!newEntry["Anime"] || !newEntry["Link"] || !newEntry["Immagine"] || !newEntry["Canale"] || !newEntry["Stato"] || !newEntry["Previsione"] || !newEntry["Genere"].length || !newEntry["Studio / Autore"]) {
+    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
+    return;
+  }
 
   fetch(endpoint, {
     method: 'POST',
@@ -497,12 +479,20 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   }).catch(() => alert("Errore durante il salvataggio."));
 }
 
+  document.getElementById('search').addEventListener('input', filterAndDisplay);
+  filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
+window.addEventListener('scroll', () => {
+  const scrollBtn = document.getElementById('back-to-top');
+  if (window.scrollY > 300) {
+    scrollBtn.style.display = 'flex';
+  } else {
+    scrollBtn.style.display = 'none';
+  }
+});
+
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-document.getElementById('search').addEventListener('input', filterAndDisplay);
-filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
 </script>
 
 <button id="back-to-top" onclick="scrollToTop()">↑</button>
