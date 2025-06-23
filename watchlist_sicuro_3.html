@@ -497,15 +497,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     return;
   }
 
-  fetch(endpoint, {
-    method: 'POST',
-    body: JSON.stringify(newEntry)
-  }).then(res => {
-    if (!res.ok) throw new Error();
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('success-check').style.display = 'flex';
-    setTimeout(() => location.reload(), 1800);
-  }).catch(() => alert("Errore durante il salvataggio."));
+  
   }
   }
 
