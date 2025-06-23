@@ -452,6 +452,9 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function submitAnime() {
+  const allowedCanali = ['Anime', 'Manga'];
+  const allowedStati = ['Da vedere', 'Da leggere', 'Visto', 'Letto', 'In corso'];
+  const allowedPrevisioni = ['Annunciata', 'Conclusa', 'In programma'];
   const fields = [
     'newAnime', 'newLink', 'newGenere', 'newStudio', 'newCanale', 'newStato', 'newPrevisione', 'newImg'
   ];
@@ -461,7 +464,10 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   const values = fields.map(id => document.getElementById(id).value.trim());
   const isValid = values.every(v => v.length > 0);
 
-  if (!isValid) {
+  if (!isValid ||
+      !allowedCanali.includes(document.getElementById('newCanale').value) ||
+      !allowedStati.includes(document.getElementById('newStato').value) ||
+      !allowedPrevisioni.includes(document.getElementById('newPrevisione').value)) {
     fields.forEach((id, i) => {
       if (!values[i]) document.getElementById(id).classList.add('invalid');
     });
@@ -479,7 +485,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     "Immagine": document.getElementById('newImg').value
   };
 
-  if (!newEntry["Anime"] || !newEntry["Link"] || !newEntry["Immagine"] || !newEntry["Canale"] || !newEntry["Stato"] || !newEntry["Previsione"] || !newEntry["Genere"].length || !newEntry["Studio / Autore"]) {
+  if (!newEntry["Anime"] || !allowedCanali.includes(newEntry["Canale"]) || !allowedStati.includes(newEntry["Stato"]) || !allowedPrevisioni.includes(newEntry["Previsione"]) ||
     alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
     return;
   }
