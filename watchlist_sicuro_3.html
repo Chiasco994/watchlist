@@ -194,7 +194,9 @@
   50% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
 }
-.form-input {
+
+input.form-input,
+select.form-input:not([multiple]) {
   font-family: 'My Hero Academia', sans-serif !important;
   font-size: 1.2em !important;
   padding: 16px 24px !important;
@@ -213,10 +215,16 @@
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
 }
-.form-input::placeholder {
+
+input.form-input::placeholder {
   color: #333;
   opacity: 0.7;
+  text-align: center;
   font-family: 'My Hero Academia', sans-serif !important;
+}
+
+select.form-input:not([multiple]) option {
+  font-family: 'My Hero Academia', sans-serif;
   text-align: center;
 }
 #success-check {
