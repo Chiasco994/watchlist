@@ -341,6 +341,52 @@ select[multiple].form-input option {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+#detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.detail-content {
+  background: white;
+  color: black;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  font-family: 'My Hero Academia', sans-serif;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.detail-content img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+#close-detail {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2em;
+  color: red;
+  cursor: pointer;
+}
+
+#detail-overlay.hidden {
+  display: none;
+}
+
 </style>
 </head>
 <body>
@@ -499,16 +545,36 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
-          <img src="${entry.bg}" alt="${entry.titolo}">
-          <div class="card-title">${entry.titolo}</div>
-          <div class="card-link" style="text-align:center"><a href="${entry.link}" target="_blank">🔗</a></div>
-        `;
+  <img src="${entry.bg}" alt="${entry.titolo}">
+  <div class="card-title">${entry.titolo}</div>
+  <div class="card-link" style="text-align:center">
+    <a href="${entry.link}" target="_blank">🔗</a>
+    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+  </div>
+`;
         container.appendChild(card);
       });
     } else {
       
     }
   }
+function showDetail(entry) {
+  document.getElementById("detail-title").textContent = entry.titolo;
+  document.getElementById("detail-img").src = entry.bg;
+  document.getElementById("detail-img").alt = entry.titolo;
+  document.getElementById("detail-link").href = entry.link;
+  document.getElementById("detail-genere").textContent = Array.isArray(entry.genere) ? entry.genere.join(", ") : entry.genere;
+  document.getElementById("detail-studio").textContent = Array.isArray(entry.studio) ? entry.studio.join(", ") : entry.studio;
+  document.getElementById("detail-canale").textContent = entry.canale;
+  document.getElementById("detail-stato").textContent = entry.stato;
+  document.getElementById("detail-previsione").textContent = entry.previsione;
+  document.getElementById("detail-rate").textContent = entry.rate;
+  document.getElementById("detail-overlay").classList.remove("hidden");
+}
+
+function hideDetail() {
+  document.getElementById("detail-overlay").classList.add("hidden");
+}
 
   function resetFilters() {
     document.getElementById('search').value = '';
@@ -583,5 +649,19 @@ function scrollToTop() {
 </script>
 
 <button id="back-to-top" onclick="scrollToTop()">↑</button>
+<div id="detail-overlay" class="hidden">
+  <div class="detail-content">
+    <span id="close-detail" onclick="hideDetail()">×</span>
+    <h2 id="detail-title"></h2>
+    <img id="detail-img" src="" alt="" />
+    <p><strong>Link:</strong> <a id="detail-link" href="#" target="_blank">Vai</a></p>
+    <p><strong>Genere:</strong> <span id="detail-genere"></span></p>
+    <p><strong>Studio / Autore:</strong> <span id="detail-studio"></span></p>
+    <p><strong>Canale:</strong> <span id="detail-canale"></span></p>
+    <p><strong>Stato:</strong> <span id="detail-stato"></span></p>
+    <p><strong>Previsione:</strong> <span id="detail-previsione"></span></p>
+    <p><strong>Rate:</strong> <span id="detail-rate"></span></p>
+  </div>
+</div>
 </body>
 </html>
