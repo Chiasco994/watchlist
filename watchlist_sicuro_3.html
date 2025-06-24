@@ -422,34 +422,40 @@ select[multiple].form-input option {
       document.getElementById("message").innerText = "Errore nel caricamento dei dati.";
     });
 
-  function updateOptions() {
-    const unique = {
-      canale: new Set(), stato: new Set(), rate: new Set(),
-      previsione: new Set(), genere: new Set(), studio: new Set()
-    };
-    data.forEach(entry => {
-      filters.forEach(f => {
-        if (f === 'genere' || f === 'studio') entry[f].forEach(v => unique[f].add(v));
-        else unique[f].add(entry[f]);
-      });
-    });
+  function updateOptions(filteredData = data) {
+  const unique = {
+    canale: new Set(), stato: new Set(), rate: new Set(),
+    previsione: new Set(), genere: new Set(), studio: new Set()
+  };
+  filteredData.forEach(entry => {
     filters.forEach(f => {
-      const sel = document.getElementById(f);
-      const filterLabels = {
-  canale: "Canale",
-  stato: "Stato",
-  rate: "Rate",
-  previsione: "Previsione",
-  genere: "Genere",
-  studio: "Studio / Autore"
-};
-sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</option>`;
-      [...unique[f]].sort((a, b) => (f === 'rate' ? a - b : a.localeCompare(b))).forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt; option.textContent = opt;
-        sel.appendChild(option);
-      });
+      if (f === 'genere' || f === 'studio') {
+        entry[f].forEach(v => unique[f].add(v));
+      } else {
+        unique[f].add(entry[f]);
+      }
     });
+  });
+
+  filters.forEach(f => {
+    const sel = document.getElementById(f);
+    const filterLabels = {
+      canale: "Canale",
+      stato: "Stato",
+      rate: "Rate",
+      previsione: "Previsione",
+      genere: "Genere",
+      studio: "Studio / Autore"
+    };
+    sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</option>`;
+    [...unique[f]].sort((a, b) => f === "rate" ? a - b : a.localeCompare(b)).forEach(opt => {
+      const option = document.createElement("option");
+      option.value = opt;
+      option.textContent = opt;
+      sel.appendChild(option);
+    });
+  });
+}
       // Popola <select multiple> per Genere e Studio / Autore nella card "Aggiungi nuovo"
     const genereSelect = document.getElementById("newGenere");
     const studioSelect = document.getElementById("newStudio");
@@ -489,6 +495,11 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
       }
       return true;
     }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+    f (hasFilters) {
+  updateOptions(filtered);
+} else {
+  updateOptions();  // ripristina tutto se non ci sono filtri
+}
 
     const container = document.getElementById('results');
     
