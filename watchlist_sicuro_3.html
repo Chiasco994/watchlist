@@ -422,12 +422,12 @@ select[multiple].form-input option {
       document.getElementById("message").innerText = "Errore nel caricamento dei dati.";
     });
 
-  function updateOptions(dataSet = data) {
+  function updateOptions() {
     const unique = {
       canale: new Set(), stato: new Set(), rate: new Set(),
       previsione: new Set(), genere: new Set(), studio: new Set()
     };
-    dataSet.forEach(entry => {
+    data.forEach(entry => {
       filters.forEach(f => {
         if (f === 'genere' || f === 'studio') entry[f].forEach(v => unique[f].add(v));
         else unique[f].add(entry[f]);
@@ -474,42 +474,41 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function filterAndDisplay() {
-  const search = document.getElementById('search').value.toLowerCase();
-  const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
-  const hasFilters = search || Object.values(activeFilters).some(val => val);
-
-  const filtered = hasFilters ? data.filter(entry => {
-    if (search && !entry.titolo.toLowerCase().includes(search)) return false;
-    for (const [f, val] of Object.entries(activeFilters)) {
-      if (!val) continue;
-      if (f === 'genere' || f === 'studio') {
-        if (!entry[f].includes(val)) return false;
-      } else {
-        if (String(entry[f]) !== val) return false;
+    const search = document.getElementById('search').value.toLowerCase();
+    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+    const hasFilters = search || Object.values(activeFilters).some(val => val);
+    const filtered = hasFilters ? data.filter(entry => {
+      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+      for (const [f, val] of Object.entries(activeFilters)) {
+        if (!val) continue;
+        if (f === 'genere' || f === 'studio') {
+          if (!entry[f].includes(val)) return false;
+        } else {
+          if (String(entry[f]) !== val) return false;
+        }
       }
+      return true;
+    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+
+    const container = document.getElementById('results');
+    
+    container.innerHTML = '';
+    if (filtered.length > 0) {
+      
+      filtered.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${entry.bg}" alt="${entry.titolo}">
+          <div class="card-title">${entry.titolo}</div>
+          <div class="card-link" style="text-align:center"><a href="${entry.link}" target="_blank">🔗</a></div>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      
     }
-    return true;
-  }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
-
-  // 🔁 Aggiorna dinamicamente i filtri in base ai risultati
-  updateOptions(filtered);
-
-  const container = document.getElementById('results');
-  container.innerHTML = '';
-
-  if (filtered.length > 0) {
-    filtered.forEach(entry => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${entry.bg}" alt="${entry.titolo}">
-        <div class="card-title">${entry.titolo}</div>
-        <div class="card-link" style="text-align:center"><a href="${entry.link}" target="_blank">🔗</a></div>
-      `;
-      container.appendChild(card);
-    });
   }
-}
 
   function resetFilters() {
     document.getElementById('search').value = '';
