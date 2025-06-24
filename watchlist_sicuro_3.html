@@ -433,13 +433,13 @@ select[multiple].form-input option {
   </div>
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
   <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
-    <input id="newAnime" placeholder="Titolo" class="form-input">
+    <input type="text" id="newTitolo" class="form-input" placeholder="Titolo">
     <select id="newCanale" class="form-input">
   <option value="" disabled selected hidden>Canale</option>
   <option value="Anime">Anime</option>
   <option value="Manga">Manga</option>
 </select>
-    <input id="newLink" placeholder="Link" class="form-input">
+   <input type="text" id="newLink" class="form-input" placeholder="Link">
     <select id="newStato" class="form-input">
   <option value="" disabled selected hidden>Stato</option>
   <option value="Visto">Visto</option>
@@ -457,7 +457,7 @@ select[multiple].form-input option {
 
     <select id="newGenere" class="form-input" multiple></select>
     <select id="newStudio" class="form-input" multiple></select>
-    <input id="newImg" placeholder="Link immagine" class="form-input">
+    <input type="text" id="newImmagine" class="form-input" placeholder="Link immagine">
     <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
   </div>
 </div>
