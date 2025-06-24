@@ -422,12 +422,12 @@ select[multiple].form-input option {
       document.getElementById("message").innerText = "Errore nel caricamento dei dati.";
     });
 
-  function updateOptions(filteredData = data) {
+  function updateOptions() {
     const unique = {
       canale: new Set(), stato: new Set(), rate: new Set(),
       previsione: new Set(), genere: new Set(), studio: new Set()
     };
-    filteredData.forEach(entry => {
+    data.forEach(entry => {
       filters.forEach(f => {
         if (f === 'genere' || f === 'studio') entry[f].forEach(v => unique[f].add(v));
         else unique[f].add(entry[f]);
@@ -489,7 +489,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
       }
       return true;
     }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
-    updateOptions(filtered);
+
     const container = document.getElementById('results');
     
     container.innerHTML = '';
