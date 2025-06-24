@@ -13,18 +13,7 @@
   font-weight: normal;
   font-style: normal;
 }
-
-/* Applica il font a tutti gli elementi della card input */
-#form-container input,
-#form-container select,
-#form-container button,
-#form-container option {
-  font-family: 'My Hero Academia', sans-serif !important;
-}
-
-/* Resto del CSS esistente... */
-
-body {
+    body {
   font-family: 'My Hero Academia', sans-serif;
   font-family: 'Zen Kaku Gothic New', sans-serif;
   margin: 0;
@@ -33,12 +22,517 @@ body {
   background-size: cover;
   color: #fff;
 }
+    .search-box { margin-bottom: 10px; }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .filters select {
+  font-family: 'My Hero Academia', sans-serif;
+  padding: 16px 24px;
+  font-size: 1.2em;
+  width: 220px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  text-indent: 0;
+  text-overflow: ellipsis;
+  direction: ltr;
+  text-align-last: center;
+  -moz-text-align-last: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 30px;
+}
+    .reset-button,
+    .add-button {
+      font-family: 'My Hero Academia', sans-serif;
+      margin: 25px auto;
+      padding: 16px 30px;
+      font-size: 1.2em;
+      font-family: 'My Hero Academia', sans-serif;
+      margin: 15px auto;
+      padding: 12px 22px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff6666;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .reset-button:hover,
+    .add-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      justify-items: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 160px;
+      aspect-ratio: 2 / 3;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      font-size: 0.75em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .card img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .card-title {
+  font-weight: bold;
+  font-size: 0.85em;
+  margin-bottom: 2px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  text-align: center;
+}
+    .card-link a {
+      text-decoration: none;
+      font-size: 1.1em;
+      color: #fff;
+      z-index: 1;
+    }
+    .card div {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  padding: 4px;
+  box-sizing: border-box;
+}
+    .hidden { display: none; }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #fff;
+      text-shadow: 1px 1px 5px black;
+    }
+    @media (max-width: 600px) {
+  .filters {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+  }
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .filters select {
+    width: 100%;
+    font-size: 0.9em;
+    padding: 10px;
+  }
+  h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  .filters-container {
+    gap: 10px;
+    padding: 10px 0;
+  }
+  #search {
+    font-size: 0.9em !important;
+    padding: 8px !important;
+    max-width: 90% !important;
+  }
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .card {
+        max-width: none;
+        font-size: 0.9em;
+      }
+    }
+  h1 {
+  font-family: 'My Hero Academia', sans-serif;
+  font-size: 4em;
+  font-weight: bold;
+  color: #FFA500;
+  text-align: center;
+  text-shadow: 3px 3px 0px #000, 5px 5px 0px #000;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: titleFadeIn 1s ease-out forwards;
+}
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
-/* Il resto del tuo CSS rimane invariato */
 
+
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.form-input {
+  font-family: 'My Hero Academia', sans-serif !important;
+  font-size: 1.3em;
+  padding: 16px 24px;
+  width: 100%;
+  max-width: 450px;
+  border: none;
+  border-radius: 30px;
+  margin: 12px 0;
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.form-input::placeholder {
+  color: #333;
+  opacity: 0.7;
+  font-family: 'My Hero Academia', sans-serif !important;
+  text-align: center;
+}
+#success-check {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#success-check img {
+  width: 100px;
+  animation: drawCheck 1s ease-out;
+}
+
+@keyframes drawCheck {
+  0% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+#back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5em;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
+  font-family: 'My Hero Academia', sans-serif;
+  transition: transform 0.2s, background 0.3s;
+}
+#back-to-top:hover {
+  transform: scale(1.1);
+  background-color: #e65c5c;
+}
+@media (max-width: 600px) {
+  .filters-container {
+    gap: 20px;
+    padding: 10px;
+  }
+  .filters {
+    flex-wrap: wrap !important;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: hidden;
+  }
+  .filters select {
+    width: 100%;
+    max-width: 95%;
+  }
+  .reset-button, .add-button {
+    width: 95%;
+    font-size: 1em;
+    padding: 10px;
+  }
+  .form-input {
+    max-width: 95%;
+  }
+  #form-container > div {
+    width: 95% !important;
+  }
+}
+.form-input.invalid {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.1);
+}
 </style>
 </head>
 <body>
-<!-- Il resto del tuo HTML rimane invariato -->
+  <div class="filters-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 30px;">
+  <h1 style="margin-bottom: 0;">Watchlist</h1>
+  <input type="text" id="search" placeholder="Cerca titolo..." style="width: 70%; max-width: 700px; padding: 14px; border-radius: 10px; border: none; font-family: 'My Hero Academia', sans-serif; font-size: 1.1em; text-align: center;">
+  <div class="filters" style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; flex-shrink: 1;">
+    <select id="canale"><option value="">Canale</option></select>
+    <select id="stato"><option value="">Stato</option></select>
+    <select id="rate"><option value="">Rate</option></select>
+    <select id="previsione"><option value="">Previsione</option></select>
+    <select id="genere"><option value="">Genere</option></select>
+    <select id="studio"><option value="">Studio / Autore</option></select>
+  </div>
+  <button class="reset-button" onclick="resetFilters()">Reset</button>
+  </div>
+  <div id="results" class="cards"></div>
+  
+  <div style="text-align:center">
+    <button class="add-button" onclick="showForm()">+ Aggiungi nuovo anime/manga</button>
+  </div>
+  <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
+  <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
+    <input id="newAnime" placeholder="Titolo" class="form-input">
+    <select id="newCanale" class="form-input">
+  <option value="" disabled selected hidden>Canale</option>
+  <option value="Anime">Anime</option>
+  <option value="Manga">Manga</option>
+</select>
+    <input id="newLink" placeholder="Link" class="form-input">
+    <select id="newStato" class="form-input">
+  <option value="" disabled selected hidden>Stato</option>
+  <option value="Visto">Visto</option>
+  <option value="Letto">Letto</option>
+  <option value="Da vedere">Da vedere</option>
+  <option value="Da leggere">Da leggere</option>
+  <option value="In corso">In corso</option>
+</select>
+   <select id="newPrevisione" class="form-input">
+  <option value="" disabled selected hidden>Previsione</option>
+  <option value="Annunciata">Annunciata</option>
+  <option value="In programma">In programma</option>
+  <option value="Conclusa">Conclusa</option>
+</select>
+
+    <select id="newGenere" class="form-input" multiple></select>
+    <select id="newStudio" class="form-input" multiple></select>
+    <input id="newImg" placeholder="Link immagine" class="form-input">
+    <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
+  </div>
+</div>
+<div id="success-check">
+  <img src="https://chiasco994.github.io/watchlist/checkmark.png" alt="Salvato">
+</div>
+<script>
+  const endpoint = "https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec";
+  let data = [];
+  const filters = ['canale', 'stato', 'rate', 'previsione', 'genere', 'studio'];
+
+  fetch(endpoint)
+    .then(res => res.json())
+    .then(json => {
+      data = json.map(entry => ({
+        titolo: entry["Anime"],
+        link: entry["Link"],
+        genere: typeof entry["Genere"] === "string" ? entry["Genere"].split(',').map(g => g.trim()) : [],
+        studio: typeof entry["Studio / Autore"] === "string" ? entry["Studio / Autore"].split(',').map(s => s.trim()) : [],
+        canale: entry["Canale"],
+        stato: entry["Stato"],
+        rate: entry["Rate"],
+        previsione: entry["Previsione"],
+        bg: entry["Immagine"]
+      }));
+      updateOptions();
+      filterAndDisplay();
+    })
+    .catch(err => {
+      console.error("Errore durante il fetch:", err);
+      document.getElementById("message").innerText = "Errore nel caricamento dei dati.";
+    });
+
+  function updateOptions() {
+    const unique = {
+      canale: new Set(), stato: new Set(), rate: new Set(),
+      previsione: new Set(), genere: new Set(), studio: new Set()
+    };
+    data.forEach(entry => {
+      filters.forEach(f => {
+        if (f === 'genere' || f === 'studio') entry[f].forEach(v => unique[f].add(v));
+        else unique[f].add(entry[f]);
+      });
+    });
+    filters.forEach(f => {
+      const sel = document.getElementById(f);
+      const filterLabels = {
+  canale: "Canale",
+  stato: "Stato",
+  rate: "Rate",
+  previsione: "Previsione",
+  genere: "Genere",
+  studio: "Studio / Autore"
+};
+sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</option>`;
+      [...unique[f]].sort((a, b) => (f === 'rate' ? a - b : a.localeCompare(b))).forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt; option.textContent = opt;
+        sel.appendChild(option);
+      });
+    });
+      // Popola <select multiple> per Genere e Studio / Autore nella card "Aggiungi nuovo"
+    const genereSelect = document.getElementById("newGenere");
+    const studioSelect = document.getElementById("newStudio");
+
+    // Svuota le select prima di riempirle
+    genereSelect.innerHTML = "";
+    studioSelect.innerHTML = "";
+
+    [...unique.genere].sort().forEach(val => {
+      const opt = document.createElement("option");
+      opt.value = val;
+      opt.textContent = val;
+      genereSelect.appendChild(opt);
+    });
+
+    [...unique.studio].sort().forEach(val => {
+      const opt = document.createElement("option");
+      opt.value = val;
+      opt.textContent = val;
+      studioSelect.appendChild(opt);
+    });
+}
+
+  function filterAndDisplay() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+    const hasFilters = search || Object.values(activeFilters).some(val => val);
+    const filtered = hasFilters ? data.filter(entry => {
+      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+      for (const [f, val] of Object.entries(activeFilters)) {
+        if (!val) continue;
+        if (f === 'genere' || f === 'studio') {
+          if (!entry[f].includes(val)) return false;
+        } else {
+          if (String(entry[f]) !== val) return false;
+        }
+      }
+      return true;
+    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+
+    const container = document.getElementById('results');
+    
+    container.innerHTML = '';
+    if (filtered.length > 0) {
+      
+      filtered.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${entry.bg}" alt="${entry.titolo}">
+          <div class="card-title">${entry.titolo}</div>
+          <div class="card-link" style="text-align:center"><a href="${entry.link}" target="_blank">🔗</a></div>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      
+    }
+  }
+
+  function resetFilters() {
+    document.getElementById('search').value = '';
+    filters.forEach(f => document.getElementById(f).value = '');
+    filterAndDisplay();
+  }
+
+  function showForm() {
+  const form = document.getElementById('form-container');
+  form.classList.toggle('hidden');
+  form.style.display = form.classList.contains('hidden') ? 'none' : 'flex';
+}
+
+  function submitAnime() {
+  const fields = [
+    'newAnime', 'newLink', 'newGenere', 'newStudio', 'newCanale', 'newStato', 'newPrevisione', 'newImg'
+  ];
+
+  fields.forEach(id => document.getElementById(id).classList.remove('invalid'));
+
+  const values = fields.map(id => document.getElementById(id).value.trim());
+  const isValid = values.every(v => v.length > 0);
+
+  if (!isValid) {
+    fields.forEach((id, i) => {
+      if (!values[i]) document.getElementById(id).classList.add('invalid');
+    });
+    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
+    return;
+  }
+  const newEntry = {
+    "Anime": document.getElementById('newAnime').value,
+    "Link": document.getElementById('newLink').value,
+    "Genere": [...document.getElementById('newGenere').selectedOptions].map(o => o.value).join(', '),
+    "Studio / Autore": [...document.getElementById('newStudio').selectedOptions].map(o => o.value).join(', '),
+    "Canale": document.getElementById('newCanale').value,
+    "Stato": document.getElementById('newStato').value,
+    "Previsione": document.getElementById('newPrevisione').value,
+    "Immagine": document.getElementById('newImg').value
+  };
+
+  if (!newEntry["Anime"] || !newEntry["Link"] || !newEntry["Immagine"] || !newEntry["Canale"] || !newEntry["Stato"] || !newEntry["Previsione"] || !newEntry["Genere"].length || !newEntry["Studio / Autore"]) {
+    alert("Tutti i campi sono obbligatori. Compilali prima di salvare.");
+    return;
+  }
+
+  fetch(endpoint, {
+    method: 'POST',
+    body: JSON.stringify(newEntry)
+  }).then(res => {
+    if (!res.ok) throw new Error();
+    document.getElementById('form-container').style.display = 'none';
+    document.getElementById('success-check').style.display = 'flex';
+    setTimeout(() => location.reload(), 1800);
+  }).catch(() => alert("Errore durante il salvataggio."));
+}
+
+  document.getElementById('search').addEventListener('input', filterAndDisplay);
+  filters.forEach(f => document.getElementById(f).addEventListener('change', filterAndDisplay));
+window.addEventListener('scroll', () => {
+  const scrollBtn = document.getElementById('back-to-top');
+  if (window.scrollY > 300) {
+    scrollBtn.style.display = 'flex';
+  } else {
+    scrollBtn.style.display = 'none';
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<button id="back-to-top" onclick="scrollToTop()">↑</button>
 </body>
 </html>
