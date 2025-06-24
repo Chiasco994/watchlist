@@ -14,9 +14,7 @@
   font-style: normal;
 }
     body {
-  font-family: 'My Hero Academia', sans-serif;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
-  margin: 0;
+    margin: 0;
   padding: 20px;
   background: url('https://chiasco994.github.io/watchlist/Image_optimized.webp') no-repeat center center fixed;
   background-size: cover;
@@ -52,10 +50,6 @@
 }
     .reset-button,
     .add-button {
-      font-family: 'My Hero Academia', sans-serif;
-      margin: 25px auto;
-      padding: 16px 30px;
-      font-size: 1.2em;
       font-family: 'My Hero Academia', sans-serif;
       margin: 15px auto;
       padding: 12px 22px;
@@ -139,12 +133,7 @@
     gap: 10px;
     justify-content: center;
   }
-  .filters {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .filters select {
+    .filters select {
     width: 100%;
     font-size: 0.9em;
     padding: 10px;
@@ -194,37 +183,30 @@
   50% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
 }
-
-input.form-input,
-select.form-input:not([multiple]) {
+.form-input {
   font-family: 'My Hero Academia', sans-serif !important;
-  font-size: 1.2em !important;
-  padding: 16px 24px !important;
-  width: 100% !important;
-  max-width: 450px !important;
-  border: none !important;
-  border-radius: 40px !important;
-  margin: 16px 0 !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-  color: #000 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-  text-align: center !important;
-  outline: none !important;
-  transition: all 0.3s ease-in-out !important;
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
+  font-size: 1.3em;
+  padding: 16px 24px;
+  width: 100%;
+  max-width: 450px;
+  border: none;
+  border-radius: 30px;
+  margin: 12px 0;
+  background: rgba(255, 255, 255, 0.95);
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-input.form-input::placeholder {
+.form-input::placeholder {
   color: #333;
   opacity: 0.7;
-  text-align: center;
   font-family: 'My Hero Academia', sans-serif !important;
-}
-
-select.form-input:not([multiple]) option {
-  font-family: 'My Hero Academia', sans-serif;
   text-align: center;
 }
 #success-check {
@@ -440,13 +422,13 @@ select[multiple].form-input option {
   </div>
   <div id="form-container" class="hidden" style="display:none; justify-content: center; margin-top: 30px;">
   <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: auto; max-width: 480px; display: flex; flex-direction: column; gap: 15px; align-items: center; font-family: 'My Hero Academia', sans-serif;">
-    <input type="text" id="newTitolo" class="form-input" placeholder="Titolo">
+    <input id="newAnime" placeholder="Titolo" class="form-input">
     <select id="newCanale" class="form-input">
   <option value="" disabled selected hidden>Canale</option>
   <option value="Anime">Anime</option>
   <option value="Manga">Manga</option>
 </select>
-   <input type="text" id="newLink" class="form-input" placeholder="Link">
+    <input id="newLink" placeholder="Link" class="form-input">
     <select id="newStato" class="form-input">
   <option value="" disabled selected hidden>Stato</option>
   <option value="Visto">Visto</option>
@@ -464,7 +446,7 @@ select[multiple].form-input option {
 
     <select id="newGenere" class="form-input" multiple></select>
     <select id="newStudio" class="form-input" multiple></select>
-    <input type="text" id="newImmagine" class="form-input" placeholder="Link immagine">
+    <input id="newImg" placeholder="Link immagine" class="form-input">
     <button id="save-button" onclick="submitAnime()" class="add-button">Salva</button>
   </div>
 </div>
