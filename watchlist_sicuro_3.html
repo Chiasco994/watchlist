@@ -716,21 +716,21 @@ function scrollToTop() {
   function checkPassword() {
     const input = document.getElementById("login-password").value;
     if (input === "Twewy94!") {
+      sessionStorage.setItem("authenticated", "true");
       document.getElementById("login-overlay").style.display = "none";
+      document.body.style.overflow = 'auto';
     } else {
       document.getElementById("login-error").style.display = "block";
     }
   }
 
-  // Blocca interazioni finché non si accede
   document.addEventListener("DOMContentLoaded", () => {
-    document.body.style.overflow = 'hidden';
-    const check = () => {
-      if (document.getElementById("login-overlay").style.display === "none") {
-        document.body.style.overflow = 'auto';
-      }
-    };
-    setInterval(check, 300);
+    if (sessionStorage.getItem("authenticated") === "true") {
+      document.getElementById("login-overlay").style.display = "none";
+      document.body.style.overflow = 'auto';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
   });
 </script>
 </body>
