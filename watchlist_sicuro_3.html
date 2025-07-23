@@ -1,218 +1,176 @@
 <!DOCTYPE html>
-<html lang="it"> <!-- Specifica che la lingua principale del documento è l'italiano -->
+<html lang="it">
 <head>
-  <!-- Precarica l'immagine di sfondo per velocizzare il rendering iniziale -->
   <link rel="preload" href="https://chiasco994.github.io/watchlist/Image_optimized.webp" as="image">
-
-  <!-- Importa un font secondario leggibile da Google Fonts (non quello principale anime) -->
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Imposta la codifica caratteri e la visualizzazione responsive -->
-  <meta charset="UTF-8"> <!-- Codifica UTF-8 per caratteri speciali -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Assicura il comportamento responsive su dispositivi mobili -->
-
-  <!-- Titolo della pagina che apparirà nella tab del browser -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Watchlist Anime/Manga</title>
-
   <style>
-    /* Registra un font personalizzato chiamato "My Hero Academia" caricato localmente in formato OpenType */
-   @font-face {
-  font-family: 'My Hero Academia'; /* Nome identificativo del font custom da usare nei CSS */
-  src: url('Futura Display BQ Regular.otf') format('opentype'); /* Collegamento al file OTF presente nel progetto */
-  font-weight: normal; /* Peso standard del font */
-  font-style: normal;  /* Nessun corsivo */
+@font-face {
+  font-family: 'My Hero Academia';
+  src: url('Futura Display BQ Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
-
-body {
-  margin: 0; /* Rimuove i margini predefiniti del browser */
-  padding: 20px; /* Spazio interno della pagina */
-  background: url('https://chiasco994.github.io/watchlist/Image_optimized.webp') no-repeat center center fixed; 
-  /* Applica un'immagine di sfondo centrata e fissata (non scrolla) */
-  background-size: cover; /* L’immagine copre tutta l’area visibile in proporzione */
-  color: #fff; /* Colore predefinito del testo: bianco */
+    body {
+    margin: 0;
+  padding: 20px;
+  background: url('https://chiasco994.github.io/watchlist/Image_optimized.webp') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
 }
-
-/* Margine inferiore per la barra di ricerca */
-.search-box {
-  margin-bottom: 10px;
+    .search-box { margin-bottom: 10px; }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .filters select {
+  font-family: 'My Hero Academia', sans-serif;
+  padding: 16px 24px;
+  font-size: 1.2em;
+  width: 220px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  text-indent: 0;
+  text-overflow: ellipsis;
+  direction: ltr;
+  text-align-last: center;
+  -moz-text-align-last: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 30px;
 }
-
-/* Stile del contenitore dei filtri */
-.filters {
-  display: flex; /* Layout flessibile per disposizione in riga */
-  flex-wrap: wrap; /* Permette di andare a capo se lo spazio orizzontale non basta */
-  gap: 10px; /* Spazio tra le select */
-  justify-content: center; /* Centra orizzontalmente tutte le select */
-}
-
-  .filters select {
-  font-family: 'My Hero Academia', sans-serif; /* Font personalizzato per coerenza estetica */
-  padding: 16px 24px; /* Spaziatura interna: verticale 16px, orizzontale 24px */
-  font-size: 1.2em; /* Dimensione del testo per visibilità e accessibilità */
-  width: 220px; /* Larghezza fissa per uniformare tutti i menu a discesa */
-  border: none; /* Nessun bordo visibile */
-  border-radius: 20px; /* Angoli arrotondati per uno stile moderno */
-  background: rgba(255, 255, 255, 0.85); /* Sfondo bianco semitrasparente */
-  color: #000; /* Testo nero per contrasto leggibile */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); /* Ombra sottile per far risaltare i select */
-  text-align: center; /* Centra il testo all’interno del menu */
-  text-indent: 0; /* Nessuna indentazione */
-  text-overflow: ellipsis; /* Troncamento con "…" se il testo è troppo lungo */
-  direction: ltr; /* Direzione del testo: da sinistra a destra */
-  text-align-last: center; /* Allinea al centro anche l’opzione selezionata */
-  -moz-text-align-last: center; /* Compatibilità con Firefox */
-  -webkit-appearance: none; /* Rimuove lo stile nativo dei browser WebKit */
-  -moz-appearance: none; /* Rimuove lo stile nativo di Firefox */
-  appearance: none; /* Disattiva lo stile nativo di default per tutti i browser */
-  padding-right: 30px; /* Spazio extra a destra per lasciare visibile la freccia del menu */
-}
-
-.reset-button,
-.add-button {
-  font-family: 'My Hero Academia', sans-serif; /* Coerenza tipografica con il resto dell’interfaccia */
-  margin: 15px auto; /* Spazio verticale sopra e sotto, centratura orizzontale */
-  padding: 12px 22px; /* Spaziatura interna bilanciata per cliccare comodamente */
-  font-size: 1.1em; /* Dimensione del testo adatta per pulsanti */
-  border: none; /* Nessun bordo visibile */
-  border-radius: 20px; /* Angoli arrotondati per uno stile più "soft" */
-  background-color: #ff6666; /* Colore rosso vivo per attirare l’attenzione */
-  color: white; /* Testo bianco per contrasto forte */
-  cursor: pointer; /* Cursore a mano per indicare cliccabilità */
-  transition: transform 0.2s, box-shadow 0.2s; /* Effetto visivo fluido su hover */
-}
-
+    .reset-button,
+    .add-button {
+      font-family: 'My Hero Academia', sans-serif;
+      margin: 15px auto;
+      padding: 12px 22px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff6666;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
     .reset-button:hover,
-.add-button:hover {
-  transform: scale(1.05); /* Leggero ingrandimento del pulsante al passaggio del mouse per feedback visivo */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombra più pronunciata per effetto "rialzato" */
+    .add-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      justify-items: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 160px;
+      aspect-ratio: 2 / 3;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      font-size: 0.75em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .card img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .card-title {
+  font-weight: bold;
+  font-size: 0.85em;
+  margin-bottom: 2px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  text-align: center;
 }
-
-.cards {
-  display: grid; /* Disposizione a griglia delle card */
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Le colonne si adattano automaticamente allo spazio disponibile */
-  gap: 10px; /* Spaziatura tra le card */
-  justify-items: center; /* Centra ogni card all’interno della propria colonna */
+    .card-link a {
+      text-decoration: none;
+      font-size: 1.1em;
+      color: #fff;
+      z-index: 1;
+    }
+    .card div {
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  padding: 4px;
+  box-sizing: border-box;
 }
-
-.card {
-  width: 100%; /* La card occupa tutta la larghezza della colonna */
-  max-width: 160px; /* Ma non può superare i 160px di larghezza */
-  aspect-ratio: 2 / 3; /* Proporzioni fisse 2:3 (larghezza:altezza) per uniformità visiva */
-  border-radius: 10px; /* Angoli arrotondati */
-  overflow: hidden; /* Nasconde tutto ciò che esce dal bordo (es. immagine) */
-  position: relative; /* Necessario per posizionare l’immagine e altri elementi in modo assoluto */
-  background-color: #000; /* Sfondo nero (utile come fallback se l’immagine non si carica) */
-  color: #fff; /* Colore del testo bianco */
-  display: flex; /* Layout flessibile verticale */
-  flex-direction: column; /* Gli elementi vengono disposti dall’alto verso il basso */
-  justify-content: flex-end; /* Spinge il contenuto verso il fondo della card */
-  font-size: 0.75em; /* Testo leggermente ridotto */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4); /* Ombra esterna leggera per risalto */
-}
-
-.card img {
-  position: absolute; /* Posiziona l’immagine sopra tutta la card */
-  top: 0; /* Inizia dal bordo superiore */
-  left: 0; /* Inizia dal bordo sinistro */
-  width: 100%; /* Larghezza completa della card */
-  height: 100%; /* Altezza completa della card */
-  object-fit: cover; /* Scala l’immagine per coprire interamente lo spazio senza deformarla */
-  z-index: 0; /* Posiziona l’immagine dietro gli altri elementi sovrapposti nella card */
-}
-
-  .card-title {
-  font-weight: bold; /* Grassetto per evidenziare il titolo */
-  font-size: 0.85em; /* Leggermente più piccolo del testo normale */
-  margin-bottom: 2px; /* Spazio inferiore minimo tra titolo e link/icona */
-  z-index: 1; /* Posiziona sopra l’immagine di sfondo */
-  background-color: rgba(0, 0, 0, 0.4); /* Sfondo nero semitrasparente per leggibilità sopra immagine */
-  width: 100%; /* Il titolo si estende su tutta la larghezza della card */
-  text-align: center; /* Centra il testo orizzontalmente */
-}
-
-.card-link a {
-  text-decoration: none; /* Rimuove sottolineatura del link */
-  font-size: 1.1em; /* Leggermente più grande del testo normale */
-  color: #fff; /* Colore bianco del link */
-  z-index: 1; /* Posiziona sopra l’immagine */
-}
-
-.card div {
-  z-index: 1; /* Mostrato sopra l’immagine */
-  background-color: rgba(0, 0, 0, 0.4); /* Sfondo scuro semitrasparente per contenuto leggibile */
-  width: 100%; /* Occupa tutta la larghezza disponibile */
-  padding: 4px; /* Spaziatura interna */
-  box-sizing: border-box; /* Include padding nel calcolo totale della larghezza */
-}
-
-.hidden {
-  display: none; /* Classe di utilità per nascondere dinamicamente elementi */
-}
-
-#message {
-  text-align: center; /* Centra il messaggio orizzontalmente */
-  margin-top: 20px; /* Spazio sopra il messaggio */
-  font-size: 1.2em; /* Dimensione maggiore per maggiore enfasi */
-  color: #fff; /* Testo bianco */
-  text-shadow: 1px 1px 5px black; /* Leggera ombra per visibilità su sfondi complessi */
-}
-
-/* Stili responsivi per schermi piccoli (≤600px) */
-@media (max-width: 600px) {
+    .hidden { display: none; }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #fff;
+      text-shadow: 1px 1px 5px black;
+    }
+    @media (max-width: 600px) {
   .filters {
-    display: grid !important; /* Forza il layout a griglia su mobile */
-    grid-template-columns: repeat(2, 1fr); /* 2 colonne affiancate */
-    gap: 10px; /* Spazio tra i filtri */
-    justif
-
-   /* --- Sezione responsive (dentro @media max-width: 600px) --- */
-.filters select {
-  width: 100%; /* Le tendine riempiono la larghezza della colonna su mobile */
-  font-size: 0.9em; /* Testo leggermente più piccolo per adattarsi a schermi stretti */
-  padding: 10px; /* Spaziatura interna ridotta */
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-content: center;
+  }
+    .filters select {
+    width: 100%;
+    font-size: 0.9em;
+    padding: 10px;
+  }
+  h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  .filters-container {
+    gap: 10px;
+    padding: 10px 0;
+  }
+  #search {
+    font-size: 0.9em !important;
+    padding: 8px !important;
+    max-width: 90% !important;
+  }
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .card {
+        max-width: none;
+        font-size: 0.9em;
+      }
+    }
+  h1 {
+  font-family: 'My Hero Academia', sans-serif;
+  font-size: 4em;
+  font-weight: bold;
+  color: #FFA500;
+  text-align: center;
+  text-shadow: 3px 3px 0px #000, 5px 5px 0px #000;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: titleFadeIn 1s ease-out forwards;
 }
-
-h1 {
-  font-size: 2em; /* Ridimensiona il titolo su schermi piccoli */
-  margin-bottom: 10px; /* Riduce lo spazio sotto il titolo su mobile */
-}
-
-.filters-container {
-  gap: 10px; /* Minore spazio verticale e tra i componenti su mobile */
-  padding: 10px 0; /* Padding top e bottom più contenuto */
-}
-
-#search {
-  font-size: 0.9em !important; /* Riduce dimensione testo nella barra di ricerca su mobile */
-  padding: 8px !important; /* Spaziatura interna ridotta per risparmiare spazio */
-  max-width: 90% !important; /* Limita la larghezza della barra su schermi piccoli */
-}
-
-.cards {
-  grid-template-columns: repeat(3, 1fr); /* Su mobile usa 3 colonne per griglia card */
-}
-
-.card {
-  max-width: none; /* Rimuove il limite di larghezza fisso */
-  font-size: 0.9em; /* Ingrandisce leggermente il testo nelle card su mobile */
-}
-
-/* --- Fine media query (manca la chiusura ma si sottintende) --- */
-
-/* --- Stile globale del titolo animato (desktop o generico) --- */
-h1 {
-  font-family: 'My Hero Academia', sans-serif; /* Font anime personalizzato */
-  font-size: 4em; /* Titolo molto grande per impatto visivo */
-  font-weight: bold; /* Grassetto deciso */
-  color: #FFA500; /* Arancione brillante */
-  text-align: center; /* Centra orizzontalmente */
-  text-shadow: 3px 3px 0px #000, 5px 5px 0px #000; /* Doppia ombra nera per effetto marcato */
-  margin-bottom: 20px; /* Spazio sotto il titolo */
-  opacity: 0; /* Inizia invisibile per effetto fade-in */
-  transform: scale(0.8); /* Scala iniziale più piccola */
-  animation: titleFadeIn 1s ease-out forwards; /* Animazione di comparsa ed espansione */
-}
-
 @keyframes titleFadeIn {
   to {
     opacity: 1;
