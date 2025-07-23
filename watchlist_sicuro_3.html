@@ -128,35 +128,12 @@
       text-shadow: 1px 1px 5px black;
     }
     @media (max-width: 600px) {
-  .filters-container {
-    gap: 20px;
-    padding: 10px;
-  }
   .filters {
-    flex-wrap: wrap !important;
-    justify-content: center;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    overflow-x: hidden;
+    justify-content: center;
   }
-  .filters select {
-    width: 100%;
-    max-width: 95%;
-  }
-  .reset-button, .add-button {
-    width: 95%;
-    font-size: 1em;
-    padding: 10px;
-  }
-  .form-input {
-    max-width: 95%;
-  }
-  #form-container > div {
-    width: 95% !important;
-  }
-  .card-title {
-    font-size: 1.1em;
-  }
-}
     .filters select {
     width: 100%;
     font-size: 0.9em;
@@ -273,31 +250,6 @@
     gap: 20px;
     padding: 10px;
   }
-  .filters {
-    flex-wrap: wrap !important;
-    justify-content: center;
-    gap: 10px;
-    overflow-x: hidden;
-  }
-  .filters select {
-    width: 100%;
-    max-width: 95%;
-  }
-  .reset-button, .add-button {
-    width: 95%;
-    font-size: 1em;
-    padding: 10px;
-  }
-  .form-input {
-    max-width: 95%;
-  }
-  #form-container > div {
-    width: 95% !important;
-  }
-  .card-title {
-    font-size: 1.1em;
-  }
-}
   .filters {
     flex-wrap: wrap !important;
     justify-content: center;
