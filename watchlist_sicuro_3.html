@@ -396,18 +396,6 @@ select[multiple].form-input option {
 #detail-overlay.hidden {
   display: none;
 }
-.koala-icon {
-  cursor: pointer;
-  font-size: 1.2em;
-  margin-left: 5px;
-  transition: color 0.2s ease;
-}
-.koala-icon.black {
-  color: black;
-}
-.koala-icon.colored {
-  color: orange; /* colore "attivo" */
-}
 
 </style>
 </head>
@@ -467,7 +455,7 @@ select[multiple].form-input option {
   const endpoint = "https://script.google.com/macros/s/AKfycbz1SWDXou7mizu_0ay94SAjBdPLdOF0B0Q1Gq8LIl2HuFgd0d_eyVx1AKYl89ISPOEYiw/exec";
   let data = [];
   const filters = ['canale', 'stato', 'rate', 'previsione', 'genere', 'studio'];
-
+  let koalaState = JSON.parse(localStorage.getItem("koalaState") || "{}");
   fetch(endpoint)
     .then(res => res.json())
     .then(json => {
@@ -564,35 +552,21 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     if (filtered.length > 0) {
       
       filtered.forEach(entry => {
-  const koalaList = JSON.parse(localStorage.getItem('koalaList') || '[]');
-  const isKoalaActive = koalaList.includes(entry.titolo);
-
-  const card = document.createElement('div');
-  card.className = 'card';
-
-  card.innerHTML = `
-    <img src="${entry.bg}" alt="${entry.titolo}">
-    <div class="card-title">${entry.titolo}</div>
-    <div class="card-link" style="text-align:center">
-      <a href="${entry.link}" target="_blank">🔗</a>
-      <button style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    </div>
-  `;
-
-  // Bottone lente
-  card.querySelector('button').addEventListener('click', () => showDetail(entry));
-
-  // Icona koala
-  const koalaIcon = document.createElement('span');
-  koalaIcon.textContent = '🐨';
-  koalaIcon.className = `koala-icon ${isKoalaActive ? 'colored' : 'black'}`;
-  koalaIcon.addEventListener('click', () => toggleKoala(entry.titolo, koalaIcon));
-
-  // Aggiungiamo il koala nella card-link
-  card.querySelector('.card-link').appendChild(koalaIcon);
-
-  container.appendChild(card);
-});
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+  <img src="${entry.bg}" alt="${entry.titolo}">
+  <div class="card-title">${entry.titolo}</div>
+  <div class="card-link" style="text-align:center">
+    <a href="${entry.link}" target="_blank">🔗</a>
+    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+    <button onclick='toggleKoala("${entry.titolo}")' id='koala-${entry.titolo}' style="background:none;border:none;cursor:pointer;font-size:1.2em;">
+      ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
+    </button>
+  </div>
+`;
+        container.appendChild(card);
+      });
     } else {
       
     }
@@ -685,18 +659,10 @@ window.addEventListener('scroll', () => {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function toggleKoala(title, element) {
-  let koalaList = JSON.parse(localStorage.getItem('koalaList') || '[]');
-  if (koalaList.includes(title)) {
-    koalaList = koalaList.filter(t => t !== title);
-    element.classList.remove('colored');
-    element.classList.add('black');
-  } else {
-    koalaList.push(title);
-    element.classList.remove('black');
-    element.classList.add('colored');
-  }
-  localStorage.setItem('koalaList', JSON.stringify(koalaList));
+function toggleKoala(title) {
+  koalaState[title] = !koalaState[title];
+  localStorage.setItem("koalaState", JSON.stringify(koalaState));
+  document.getElementById(`koala-${title}`).innerHTML = koalaState[title] ? "🐨✅" : "🐨";
 }
 </script>
 
