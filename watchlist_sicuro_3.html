@@ -530,45 +530,60 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function filterAndDisplay() {
-    const search = document.getElementById('search').value.toLowerCase();
-    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
-    const hasFilters = search || Object.values(activeFilters).some(val => val);
-    const filtered = hasFilters ? data.filter(entry => {
-      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
-      for (const [f, val] of Object.entries(activeFilters)) {
-        if (!val) continue;
-        if (f === 'genere' || f === 'studio') {
-          if (!entry[f].includes(val)) return false;
-        } else {
-          if (String(entry[f]) !== val) return false;
-        }
+  const search = document.getElementById('search').value.toLowerCase();
+  const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+  const hasFilters = search || Object.values(activeFilters).some(val => val);
+  const filtered = hasFilters ? data.filter(entry => {
+    if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+    for (const [f, val] of Object.entries(activeFilters)) {
+      if (!val) continue;
+      if (f === 'genere' || f === 'studio') {
+        if (!entry[f].includes(val)) return false;
+      } else {
+        if (String(entry[f]) !== val) return false;
       }
-      return true;
-    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+    }
+    return true;
+  }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
 
-    const container = document.getElementById('results');
-    
-    container.innerHTML = '';
-    if (filtered.length > 0) {
-      
-      filtered.forEach(entry => {
-  const koalaState = localStorage.getItem(`koala_${entry.titolo}`);
-  const koalaColor = koalaState === "true" ? "" : "#000"; // "" = emoji colorata, "#000" = nera
+  const container = document.getElementById('results');
+  container.innerHTML = '';
 
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.innerHTML = `
-    <img src="${entry.bg}" alt="${entry.titolo}">
-    <div class="card-title">${entry.titolo}</div>
-    <div class="card-link" style="text-align:center">
-      <a href="${entry.link}" target="_blank">🔗</a>
-      <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})'
-              style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-      <span class="koala-btn" data-title="${entry.titolo}" 
-            style="cursor:pointer;font-size:1.4em;margin-left:5px;color:${koalaColor};">🐨</span>
-    </div>
-  `;
-  container.appendChild(card);
+  if (filtered.length > 0) {
+    filtered.forEach(entry => {
+      // Stato salvato (true = colorato, false = nero)
+      const savedState = localStorage.getItem(`koala_${entry.titolo}`) === "true";
+      const koalaColor = savedState ? "" : "#000"; // "" usa l'emoji colorata di default
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${entry.bg}" alt="${entry.titolo}">
+        <div class="card-title">${entry.titolo}</div>
+        <div class="card-link" style="text-align:center">
+          <a href="${entry.link}" target="_blank">🔗</a>
+          <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})'
+                  style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+          <span class="koala-btn" data-title="${entry.titolo}" 
+                style="cursor:pointer;font-size:1.4em;margin-left:5px;color:${koalaColor};">🐨</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+}
+
+// Listener globale per il click koala
+document.getElementById('results').addEventListener('click', function(e) {
+  if (e.target.classList.contains('koala-btn')) {
+    const span = e.target;
+    const title = span.getAttribute('data-title');
+    const isSelected = localStorage.getItem(`koala_${title}`) === "true";
+
+    // Toggle stato e colore
+    localStorage.setItem(`koala_${title}`, (!isSelected).toString());
+    span.style.color = !isSelected ? "" : "#000";
+  }
 });
     } else {
       
