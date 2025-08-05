@@ -563,13 +563,13 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
       <a href="${entry.link}" target="_blank">🔗</a>
       <button class="btn-lente" data-index="${index}" style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
       <button class="btn-koala" data-title="${encodeURIComponent(entry.titolo)}" id="koala-${index}" style="background:none;border:none;cursor:pointer;font-size:1.2em;">
-        ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
+  ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
       </button>
     </div>
   `;
   container.appendChild(card);
 });
-// Dopo aver creato le card, aggiungo gli event listener
+// Eventi per la lente
 container.querySelectorAll('.btn-lente').forEach(btn => {
   btn.addEventListener('click', e => {
     const idx = e.currentTarget.getAttribute('data-index');
@@ -577,6 +577,7 @@ container.querySelectorAll('.btn-lente').forEach(btn => {
   });
 });
 
+// Eventi per il koala
 container.querySelectorAll('.btn-koala').forEach(btn => {
   btn.addEventListener('click', e => {
     const title = decodeURIComponent(e.currentTarget.getAttribute('data-title'));
@@ -675,10 +676,10 @@ window.addEventListener('scroll', () => {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function toggleKoala(title) {
+function toggleKoala(title, button) {
   koalaState[title] = !koalaState[title];
   localStorage.setItem("koalaState", JSON.stringify(koalaState));
-  document.getElementById(`koala-${title}`).innerHTML = koalaState[title] ? "🐨✅" : "🐨";
+  button.innerHTML = koalaState[title] ? "🐨✅" : "🐨";
 }
 </script>
 
