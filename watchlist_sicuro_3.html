@@ -551,22 +551,38 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     container.innerHTML = '';
     if (filtered.length > 0) {
       
-      filtered.forEach(entry => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-  <img src="${entry.bg}" alt="${entry.titolo}">
-  <div class="card-title">${entry.titolo}</div>
-  <div class="card-link" style="text-align:center">
-    <a href="${entry.link}" target="_blank">🔗</a>
-    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <button onclick='toggleKoala("${entry.titolo}")' id='koala-${entry.titolo}' style="background:none;border:none;cursor:pointer;font-size:1.2em;">
-      ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
-    </button>
-  </div>
-`;
-        container.appendChild(card);
-      });
+      filtered.forEach((entry, index) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  // Genera HTML della card senza mettere JSON nell'onclick
+  card.innerHTML = `
+    <img src="${entry.bg}" alt="${entry.titolo}">
+    <div class="card-title">${entry.titolo}</div>
+    <div class="card-link" style="text-align:center">
+      <a href="${entry.link}" target="_blank">🔗</a>
+      <button class="btn-lente" data-index="${index}" style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+      <button class="btn-koala" data-title="${encodeURIComponent(entry.titolo)}" id="koala-${index}" style="background:none;border:none;cursor:pointer;font-size:1.2em;">
+        ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
+      </button>
+    </div>
+  `;
+  container.appendChild(card);
+});
+// Dopo aver creato le card, aggiungo gli event listener
+container.querySelectorAll('.btn-lente').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const idx = e.currentTarget.getAttribute('data-index');
+    showDetail(filtered[idx]);
+  });
+});
+
+container.querySelectorAll('.btn-koala').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const title = decodeURIComponent(e.currentTarget.getAttribute('data-title'));
+    toggleKoala(title, e.currentTarget);
+  });
+});
     } else {
       
     }
