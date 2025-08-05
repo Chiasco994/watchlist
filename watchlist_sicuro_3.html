@@ -530,46 +530,60 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function filterAndDisplay() {
-    const search = document.getElementById('search').value.toLowerCase();
-    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
-    const hasFilters = search || Object.values(activeFilters).some(val => val);
-    const filtered = hasFilters ? data.filter(entry => {
-      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
-      for (const [f, val] of Object.entries(activeFilters)) {
-        if (!val) continue;
-        if (f === 'genere' || f === 'studio') {
-          if (!entry[f].includes(val)) return false;
-        } else {
-          if (String(entry[f]) !== val) return false;
-        }
+  const search = document.getElementById('search').value.toLowerCase();
+  const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+  const hasFilters = search || Object.values(activeFilters).some(val => val);
+  const filtered = hasFilters ? data.filter(entry => {
+    if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+    for (const [f, val] of Object.entries(activeFilters)) {
+      if (!val) continue;
+      if (f === 'genere' || f === 'studio') {
+        if (!entry[f].includes(val)) return false;
+      } else {
+        if (String(entry[f]) !== val) return false;
       }
-      return true;
-    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+    }
+    return true;
+  }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
 
-    const container = document.getElementById('results');
-    
-    container.innerHTML = '';
-    if (filtered.length > 0) {
-      
-      filtered.forEach(entry => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-  <img src="${entry.bg}" alt="${entry.titolo}">
-  <div class="card-title">${entry.titolo}</div>
-  <div class="card-link" style="text-align:center">
-    <a href="${entry.link}" target="_blank">🔗</a>
-    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <button onclick='toggleKoala("${entry.titolo}")' id='koala-${entry.titolo}' style="background:none;border:none;cursor:pointer;font-size:1.2em;">
-      ${koalaState[entry.titolo] ? "🐨✅" : "🐨"}
-    </button>
-  </div>
-`;
-        container.appendChild(card);
-      });
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+
+  if (filtered.length > 0) {
+    filtered.forEach(entry => {
+      const index = data.indexOf(entry); // indice sicuro fuori dall'HTML
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${entry.bg}" alt="${entry.titolo}">
+        <div class="card-title">${entry.titolo}</div>
+        <div class="card-link" style="text-align:center">
+          <a href="${entry.link}" target="_blank">🔗</a>
+          <button onclick='showDetailByIndex(${index})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+          <button onclick='toggleKoala(${index})' id='koala-${index}' style="background:none;border:none;cursor:pointer;font-size:1.2em;">
+            ${koalaState[index] ? "🐨✅" : "🐨"}
+          </button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
     } else {
       
     }
+    function showDetailByIndex(index) {
+  const entry = data[index];
+  document.getElementById("detail-title").textContent = entry.titolo;
+  document.getElementById("detail-img").src = entry.bg;
+  document.getElementById("detail-img").alt = entry.titolo;
+  document.getElementById("detail-link").href = entry.link;
+  document.getElementById("detail-genere").textContent = Array.isArray(entry.genere) ? entry.genere.join(", ") : entry.genere;
+  document.getElementById("detail-studio").textContent = Array.isArray(entry.studio) ? entry.studio.join(", ") : entry.studio;
+  document.getElementById("detail-canale").textContent = entry.canale;
+  document.getElementById("detail-stato").textContent = entry.stato;
+  document.getElementById("detail-previsione").textContent = entry.previsione;
+  document.getElementById("detail-rate").textContent = entry.rate;
+  document.getElementById("detail-overlay").classList.remove("hidden");
+}
   }
 function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
@@ -659,10 +673,10 @@ window.addEventListener('scroll', () => {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function toggleKoala(title) {
-  koalaState[title] = !koalaState[title];
+function toggleKoala(index) {
+  koalaState[index] = !koalaState[index];
   localStorage.setItem("koalaState", JSON.stringify(koalaState));
-  document.getElementById(`koala-${title}`).innerHTML = koalaState[title] ? "🐨✅" : "🐨";
+  document.getElementById(`koala-${index}`).innerHTML = koalaState[index] ? "🐨✅" : "🐨";
 }
 </script>
 
