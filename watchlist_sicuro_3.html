@@ -560,6 +560,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   <div class="card-link" style="text-align:center">
     <a href="${entry.link}" target="_blank">🔗</a>
     <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+    <span class="koala-btn" data-title="${entry.titolo}" style="cursor:pointer;font-size:1.2em;opacity:0.3; margin-left:5px;">🐨</span>
   </div>
 `;
         container.appendChild(card);
@@ -568,6 +569,27 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
       
     }
   }
+initKoalaButtons();
+function initKoalaButtons() {
+  document.querySelectorAll('.koala-btn').forEach(span => {
+    const title = span.getAttribute('data-title');
+    const savedState = localStorage.getItem(`koala_${title}`);
+
+    // Stato iniziale
+    if (savedState === 'true') {
+      span.style.opacity = "1";
+    } else {
+      span.style.opacity = "0.3";
+    }
+
+    // Toggle al click
+    span.addEventListener('click', () => {
+      const isSelected = localStorage.getItem(`koala_${title}`) === 'true';
+      localStorage.setItem(`koala_${title}`, !isSelected);
+      span.style.opacity = !isSelected ? "1" : "0.3";
+    });
+  });
+}
 function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
