@@ -159,9 +159,6 @@
         max-width: none;
         font-size: 0.9em;
       }
-      .card-title {
-    font-size: 0.9em;
-  }
     }
   h1 {
   font-family: 'My Hero Academia', sans-serif;
@@ -563,6 +560,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   <div class="card-link" style="text-align:center">
     <a href="${entry.link}" target="_blank">🔗</a>
     <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+    <button onclick="toggleFavorite('${entry.titolo}')" style="background:none;border:none;cursor:pointer;font-size:1.2em;color:red;">❤</button>
   </div>
 `;
         container.appendChild(card);
