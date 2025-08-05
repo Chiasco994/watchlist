@@ -560,7 +560,9 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   <div class="card-link" style="text-align:center">
     <a href="${entry.link}" target="_blank">🔗</a>
     <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <button onclick="toggleFavorite('${entry.titolo}')" style="background:none;border:none;cursor:pointer;font-size:1.2em;color:red;">❤</button>
+    <button onclick="toggleKoala('${entry.titolo}')" style="background:none;border:none;cursor:pointer;font-size:1.4em;">
+    ${favoriteKoalas.has(entry.titolo) ? "🐨" : "⬜🐨"}
+  </button>
   </div>
 `;
         container.appendChild(card);
@@ -569,6 +571,18 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
       
     }
   }
+// Set per memorizzare gli anime con il Koala attivo
+let favoriteKoalas = new Set(JSON.parse(localStorage.getItem("favoriteKoalas") || "[]"));
+
+function toggleKoala(titolo) {
+  if (favoriteKoalas.has(titolo)) {
+    favoriteKoalas.delete(titolo); // Rimuove il Koala
+  } else {
+    favoriteKoalas.add(titolo); // Aggiunge il Koala
+  }
+  localStorage.setItem("favoriteKoalas", JSON.stringify(Array.from(favoriteKoalas)));
+  filterAndDisplay(); // Ricarica le card per aggiornare l’icona
+}
 function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
