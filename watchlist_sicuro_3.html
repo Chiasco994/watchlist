@@ -565,11 +565,11 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 `;
         container.appendChild(card);
       });
+initKoalaButtons();
     } else {
       
     }
   }
-initKoalaButtons();
 function initKoalaButtons() {
   document.querySelectorAll('.koala-btn').forEach(span => {
     const title = span.getAttribute('data-title');
@@ -577,16 +577,16 @@ function initKoalaButtons() {
 
     // Stato iniziale
     if (savedState === 'true') {
-      span.style.opacity = "1";
+      span.style.color = ""; // rimuove forzatura → icona colorata
     } else {
-      span.style.opacity = "0.3";
+      span.style.color = "#000"; // nero
     }
 
     // Toggle al click
     span.addEventListener('click', () => {
       const isSelected = localStorage.getItem(`koala_${title}`) === 'true';
       localStorage.setItem(`koala_${title}`, !isSelected);
-      span.style.opacity = !isSelected ? "1" : "0.3";
+      span.style.color = !isSelected ? "" : "#000";
     });
   });
 }
