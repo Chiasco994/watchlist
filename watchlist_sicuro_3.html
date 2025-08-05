@@ -569,15 +569,28 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 
   const card = document.createElement('div');
   card.className = 'card';
+
   card.innerHTML = `
-  <img src="${entry.bg}" alt="${entry.titolo}">
-  <div class="card-title">${entry.titolo}</div>
-  <div class="card-link" style="text-align:center">
-    <a href="${entry.link}" target="_blank">🔗</a>
-    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <span class="koala-icon ${isKoalaActive ? 'colored' : 'black'}" onclick="toggleKoala('${entry.titolo}', this)">🐨</span>
-  </div>
-`;
+    <img src="${entry.bg}" alt="${entry.titolo}">
+    <div class="card-title">${entry.titolo}</div>
+    <div class="card-link" style="text-align:center">
+      <a href="${entry.link}" target="_blank">🔗</a>
+      <button style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+    </div>
+  `;
+
+  // Bottone lente
+  card.querySelector('button').addEventListener('click', () => showDetail(entry));
+
+  // Icona koala
+  const koalaIcon = document.createElement('span');
+  koalaIcon.textContent = '🐨';
+  koalaIcon.className = `koala-icon ${isKoalaActive ? 'colored' : 'black'}`;
+  koalaIcon.addEventListener('click', () => toggleKoala(entry.titolo, koalaIcon));
+
+  // Aggiungiamo il koala nella card-link
+  card.querySelector('.card-link').appendChild(koalaIcon);
+
   container.appendChild(card);
 });
     } else {
