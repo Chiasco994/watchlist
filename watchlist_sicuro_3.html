@@ -530,72 +530,64 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 }
 
   function filterAndDisplay() {
-    const search = document.getElementById('search').value.toLowerCase();
-    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
-    const hasFilters = search || Object.values(activeFilters).some(val => val);
-    const filtered = hasFilters ? data.filter(entry => {
-      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
-      for (const [f, val] of Object.entries(activeFilters)) {
-        if (!val) continue;
-        if (f === 'genere' || f === 'studio') {
-          if (!entry[f].includes(val)) return false;
-        } else {
-          if (String(entry[f]) !== val) return false;
-        }
+  const search = document.getElementById('search').value.toLowerCase();
+  const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+  const hasFilters = search || Object.values(activeFilters).some(val => val);
+  const filtered = hasFilters ? data.filter(entry => {
+    if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+    for (const [f, val] of Object.entries(activeFilters)) {
+      if (!val) continue;
+      if (f === 'genere' || f === 'studio') {
+        if (!entry[f].includes(val)) return false;
+      } else {
+        if (String(entry[f]) !== val) return false;
       }
-      return true;
-    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
-
-    const container = document.getElementById('results');
-    
-    container.innerHTML = '';
-    if (filtered.length > 0) {
-      
-      filtered.forEach(entry => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-  <img src="${entry.bg}" alt="${entry.titolo}">
-  <div class="card-title">${entry.titolo}</div>
-  <div class="card-link" style="text-align:center">
-    <a href="${entry.link}" target="_blank">🔗</a>
-    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <span class="koala-btn" data-title="${entry.titolo}" style="cursor:pointer;font-size:1.4em;margin-left:5px;">🐨</span>
-  </div>
-`;
-        container.appendChild(card);
-      });
-initKoalaButtons();
-    } else {
-      
     }
+    return true;
+  }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
+
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+
+  if (filtered.length > 0) {
+    filtered.forEach(entry => {
+      const koalaState = localStorage.getItem(`koala_${entry.titolo}`);
+      const koalaColor = koalaState === "true" ? "" : "#000";
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${entry.bg}" alt="${entry.titolo}">
+        <div class="card-title">${entry.titolo}</div>
+        <div class="card-link" style="text-align:center">
+          <a href="${entry.link}" target="_blank">🔗</a>
+          <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})'
+                  style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+          <span class="koala-btn" data-title="${entry.titolo}" 
+                style="cursor:pointer;font-size:1.4em;margin-left:5px;color:${koalaColor};">🐨</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
   }
-function initKoalaButtons() {
-  document.querySelectorAll('.koala-btn').forEach(span => {
+}
+
+// ⬅️ LISTENER FUORI dalla funzione
+document.getElementById('results').addEventListener('click', function(e) {
+  if (e.target.classList.contains('koala-btn')) {
+    const span = e.target;
     const title = span.getAttribute('data-title');
     let savedState = localStorage.getItem(`koala_${title}`);
 
-    // Se non esiste ancora, la mettiamo di default NON selezionata
     if (savedState === null) {
       savedState = "false";
-      localStorage.setItem(`koala_${title}`, "false");
     }
 
-    // Applica lo stato iniziale
-    if (savedState === "true") {
-      span.style.color = ""; // colorata
-    } else {
-      span.style.color = "#000"; // nera
-    }
-
-    // Toggle al click
-    span.addEventListener('click', () => {
-      const isSelected = localStorage.getItem(`koala_${title}`) === "true";
-      localStorage.setItem(`koala_${title}`, (!isSelected).toString());
-      span.style.color = !isSelected ? "" : "#000";
-    });
-  });
-}
+    const isSelected = savedState === "true";
+    localStorage.setItem(`koala_${title}`, (!isSelected).toString());
+    span.style.color = !isSelected ? "" : "#000";
+  }
+});
 function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
