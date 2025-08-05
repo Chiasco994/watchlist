@@ -551,7 +551,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
 
   if (filtered.length > 0) {
     filtered.forEach(entry => {
-      const index = data.indexOf(entry); // indice sicuro fuori dall'HTML
+      const index = data.indexOf(entry);
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
