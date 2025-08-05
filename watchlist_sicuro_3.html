@@ -560,7 +560,7 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
   <div class="card-link" style="text-align:center">
     <a href="${entry.link}" target="_blank">🔗</a>
     <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
-    <span class="koala-btn" data-title="${entry.titolo}" style="cursor:pointer;font-size:1.2em;opacity:0.3; margin-left:5px;">🐨</span>
+    <span class="koala-btn" data-title="${entry.titolo}" style="cursor:pointer;font-size:1.4em;margin-left:5px;">🐨</span>
   </div>
 `;
         container.appendChild(card);
@@ -575,11 +575,14 @@ function initKoalaButtons() {
     const title = span.getAttribute('data-title');
     const savedState = localStorage.getItem(`koala_${title}`);
 
-    // Stato iniziale
+    // Forza la rimozione di trasparenze
+    span.style.opacity = "1";
+
+    // Stato iniziale: nero o emoji colorata
     if (savedState === 'true') {
-      span.style.color = ""; // rimuove forzatura → icona colorata
+      span.style.color = ""; // emoji colorata
     } else {
-      span.style.color = "#000"; // nero
+      span.style.color = "#000"; // nero pieno
     }
 
     // Toggle al click
@@ -589,8 +592,7 @@ function initKoalaButtons() {
       span.style.color = !isSelected ? "" : "#000";
     });
   });
-}
-function showDetail(entry) {
+}function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
   document.getElementById("detail-img").alt = entry.titolo;
