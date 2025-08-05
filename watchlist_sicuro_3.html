@@ -573,26 +573,30 @@ initKoalaButtons();
 function initKoalaButtons() {
   document.querySelectorAll('.koala-btn').forEach(span => {
     const title = span.getAttribute('data-title');
-    const savedState = localStorage.getItem(`koala_${title}`);
+    let savedState = localStorage.getItem(`koala_${title}`);
 
-    // Forza la rimozione di trasparenze
-    span.style.opacity = "1";
+    // Se non esiste ancora, la mettiamo di default NON selezionata
+    if (savedState === null) {
+      savedState = "false";
+      localStorage.setItem(`koala_${title}`, "false");
+    }
 
-    // Stato iniziale: nero o emoji colorata
-    if (savedState === 'true') {
-      span.style.color = ""; // emoji colorata
+    // Applica lo stato iniziale
+    if (savedState === "true") {
+      span.style.color = ""; // colorata
     } else {
-      span.style.color = "#000"; // nero pieno
+      span.style.color = "#000"; // nera
     }
 
     // Toggle al click
     span.addEventListener('click', () => {
-      const isSelected = localStorage.getItem(`koala_${title}`) === 'true';
-      localStorage.setItem(`koala_${title}`, !isSelected);
+      const isSelected = localStorage.getItem(`koala_${title}`) === "true";
+      localStorage.setItem(`koala_${title}`, (!isSelected).toString());
       span.style.color = !isSelected ? "" : "#000";
     });
   });
-}function showDetail(entry) {
+}
+function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
   document.getElementById("detail-img").alt = entry.titolo;
