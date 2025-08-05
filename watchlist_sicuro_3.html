@@ -73,20 +73,20 @@
       justify-items: center;
     }
     .card {
-      width: 100%;
-      max-width: 160px;
-      aspect-ratio: 2 / 3;
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      font-size: 0.75em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
+  width: 100%;
+  max-width: 160px;
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  font-size: 0.75em;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
     .card img {
       position: absolute;
       top: 0;
@@ -96,15 +96,16 @@
       object-fit: cover;
       z-index: 0;
     }
-    .card-title {
-  font-weight: bold;
-  font-size: 0.85em;
+ .card-title {
+  font-family: 'My Hero Academia', sans-serif;
+  font-size: 1.5em;
   margin-bottom: 2px;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   text-align: center;
 }
+
     .card-link a {
       text-decoration: none;
       font-size: 1.1em;
@@ -176,12 +177,6 @@
     opacity: 1;
     transform: scale(1);
   }
-}
-
-
-
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); }
 }
 .form-input {
   font-family: 'My Hero Academia', sans-serif !important;
@@ -277,27 +272,30 @@
     width: 95% !important;
   }
 }
-.form-input.invalid {
-  border: 2px solid red;
-  background-color: rgba(255, 0, 0, 0.1);
-#detail-overlay {
-    padding: 10px;
-  }
-
   .detail-content {
-    max-width: 95vw;
-    max-height: 90vh;
-    padding: 20px;
-    font-size: 0.95em;
-    overflow-y: auto;
-  }
-
+  background: white;
+  color: black;
+  border-radius: 20px;
+  padding: 30px;
+  width: 400px;
+  height: 500px;
+  overflow: hidden;
+  font-family: 'My Hero Academia', sans-serif;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
   .detail-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-  }
-
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
   #close-detail {
     font-size: 2em;
     top: 5px;
@@ -531,25 +529,45 @@ sel.innerHTML = `<option value="" disabled selected hidden>${filterLabels[f]}</o
     });
 }
 
-  function showDetails(entry) {
-  document.getElementById('detail-title').textContent = entry.titolo;
-  document.getElementById('detail-image').src = entry.bg || '';
-  document.getElementById('detail-canale').textContent = entry.canale || '—';
-  document.getElementById('detail-stato').textContent = entry.stato || '—';
-  document.getElementById('detail-previsione').textContent = entry.previsione || '—';
-  document.getElementById('detail-rate').textContent = entry.rate || '—';
-  document.getElementById('detail-genere').textContent = Array.isArray(entry.genere) ? entry.genere.join(', ') : (entry.genere || '—');
-  document.getElementById('detail-studio').textContent = Array.isArray(entry.studio) ? entry.studio.join(', ') : (entry.studio || '—');
-  document.getElementById('detail-link').href = entry.link || '#';
+  function filterAndDisplay() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const activeFilters = Object.fromEntries(filters.map(f => [f, document.getElementById(f).value]));
+    const hasFilters = search || Object.values(activeFilters).some(val => val);
+    const filtered = hasFilters ? data.filter(entry => {
+      if (search && !entry.titolo.toLowerCase().includes(search)) return false;
+      for (const [f, val] of Object.entries(activeFilters)) {
+        if (!val) continue;
+        if (f === 'genere' || f === 'studio') {
+          if (!entry[f].includes(val)) return false;
+        } else {
+          if (String(entry[f]) !== val) return false;
+        }
+      }
+      return true;
+    }).sort((a, b) => a.titolo.localeCompare(b.titolo)) : [];
 
-  document.getElementById('details-overlay').style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-
-function closeDetails() {
-  document.getElementById('details-overlay').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
+    const container = document.getElementById('results');
+    
+    container.innerHTML = '';
+    if (filtered.length > 0) {
+      
+      filtered.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+  <img src="${entry.bg}" alt="${entry.titolo}">
+  <div class="card-title">${entry.titolo}</div>
+  <div class="card-link" style="text-align:center">
+    <a href="${entry.link}" target="_blank">🔗</a>
+    <button onclick='showDetail(${JSON.stringify(entry).replace(/'/g, "\\'")})' style="background:none;border:none;cursor:pointer;font-size:1.2em;">🔍</button>
+  </div>
+`;
+        container.appendChild(card);
+      });
+    } else {
+      
+    }
+  }
 function showDetail(entry) {
   document.getElementById("detail-title").textContent = entry.titolo;
   document.getElementById("detail-img").src = entry.bg;
@@ -713,34 +731,6 @@ function scrollToTop() {
     }
   });
 </script>
-  <div id="details-overlay" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  color: white;
-  z-index: 9999;
-  display: none;
-  overflow-y: auto;
-  padding: 30px 10px;
-  box-sizing: border-box;
-  font-family: 'My Hero Academia', sans-serif;
-">
-  <div style="max-width: 500px; margin: auto; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px;">
-    <h2 id="detail-title" style="text-align: center; margin-bottom: 10px;"></h2>
-    <img id="detail-image" src="" alt="" style="width: 100%; border-radius: 10px; margin-bottom: 10px;">
-    <p><strong>Canale:</strong> <span id="detail-canale"></span></p>
-    <p><strong>Stato:</strong> <span id="detail-stato"></span></p>
-    <p><strong>Previsione:</strong> <span id="detail-previsione"></span></p>
-    <p><strong>Rate:</strong> <span id="detail-rate"></span></p>
-    <p><strong>Genere:</strong> <span id="detail-genere"></span></p>
-    <p><strong>Studio / Autore:</strong> <span id="detail-studio"></span></p>
-    <p><strong>🔗 Link:</strong> <a id="detail-link" href="" target="_blank" style="color: #ffa;">Visita pagina</a></p>
-    <div style="text-align: center; margin-top: 20px;">
-      <button onclick="closeDetails()" style="padding: 10px 20px; font-family: 'My Hero Academia'; border-radius: 20px; background-color: #ff6666; color: white; border: none; cursor: pointer;">Chiudi</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
 
